@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Hello world action step
-        uses: hadorco/Datree-cli-action@main
+        uses: hadar-co/dtgatest@main
         with:
-          file: 'testing2/try.yaml'
+          file: 'action.yaml'
           options: '--output simple'
