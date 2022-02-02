@@ -14,3 +14,4 @@ jobs:
         with:
           file: 'action.yaml'
           options: '--output simple'
+          token: 'internal_m1MTVFban3vRikZAP53dvu'
