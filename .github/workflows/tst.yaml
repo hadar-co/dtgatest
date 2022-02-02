@@ -1,17 +1,17 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  datree_test_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Datree policy check
     steps:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Hello world action step
+      - name: Datree policy check
         uses: hadar-co/dtgatest@main
         with:
-          file: 'action.yaml'
+          file: 'test.yaml'
           options: '--output simple'
           token: 'internal_m1MTVFban3vRikZAP53dvu'
