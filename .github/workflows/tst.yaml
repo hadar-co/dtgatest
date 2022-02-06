@@ -1,5 +1,8 @@
 on: [push]
 
+env:
+  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
+
 jobs:
   datree_test_job:
     runs-on: ubuntu-latest
