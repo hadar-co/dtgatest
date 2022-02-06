@@ -7,7 +7,7 @@ token=""
 if [ -n "$INPUT_TOKEN" ]; then
     token="$INPUT_TOKEN"
 elif [ -n {{ env.DATREE_TOKEN }} ]; then
-    token="$DATREE_TOKEN"
+    token={{ env.DATREE_TOKEN }}
 else
     echo "No token configured, see https://github.com/datreeio/action-datree for instructions"
 fi
