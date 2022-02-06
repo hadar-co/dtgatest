@@ -1,6 +1,4 @@
-on: 
-  - [push]
-  - workflow_dispatch
+on: [push]
 
 jobs:
   datree_test_job:
