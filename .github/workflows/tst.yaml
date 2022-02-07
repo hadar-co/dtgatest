@@ -17,4 +17,5 @@ jobs:
         with:
           file: 'test.yaml'
           options: ''
-          token: 'internal_m1MTVFban3vRikZAP53dvu'
+          isHelmChart: true
+          helmArguments: '--values values.yaml'
