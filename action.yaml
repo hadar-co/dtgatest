@@ -3,14 +3,16 @@ description: Use the Datree CLI in a github action
 author: hadarco
 inputs:
   file:
-    description: the configuration file to be checked
+    description: the file/s to be tested
     required: true
   options:
-    description: set the command options for your datree CLI
+    description: the Datree CLI options to be used
     required: false
-  token:
-    description: your Datree CLI token
+    default: ''
+  helm-arguments:
+    description: the Helm arguments to be used
     required: false
+    default: ''
 runs:
   using: docker
   image: Dockerfile
