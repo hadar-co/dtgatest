@@ -17,4 +17,4 @@ jobs:
         with:
           file: 'test.yaml'
           options: ''
-          token: ''
+          token: 'internal_m1MTVFban3vRikZAP53dvu'
