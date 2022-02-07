@@ -15,7 +15,7 @@ jobs:
       - name: Datree policy check
         uses: hadar-co/dtgatest@main
         with:
-          file: 'test.yaml'
+          file: 'testchart'
           options: ''
           isHelmChart: true
           helmArguments: '--values values.yaml'
