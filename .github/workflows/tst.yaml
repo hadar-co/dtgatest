@@ -16,5 +16,5 @@ jobs:
         uses: hadar-co/dtgatest@main
         with:
           file: 'test.yaml'
-          options: '--output simple'
+          options: ''
           token: ''
