@@ -9,7 +9,7 @@ inputs:
     description: the Datree CLI options to be used
     required: false
     default: ''
-  helm-arguments:
+  helmArguments:
     description: the Helm arguments to be used
     required: false
     default: ''
