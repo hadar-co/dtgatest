@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Run Datree Policy Check
-        uses: hadarco/action-datree@main
+        uses: hadar-co/action-datree@main
         with:
           path: 'test.yaml'
           cliArguments: ''
