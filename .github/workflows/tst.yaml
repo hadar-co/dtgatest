@@ -1,19 +1,22 @@
-on: [push]
-
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
 env:
-  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
+  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
 
 jobs:
-  datree_test_job:
+  k8sPolicyCheck:
     runs-on: ubuntu-latest
-    name: Datree policy check
+
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Datree policy check
-        uses: hadar-co/dtgatest@main
+        
+      - name: Run Datree Policy Check
+        uses: datreeio/action-datree@main
         with:
-          file: 'test.yaml'
-          options: ''
+          path: 'test.yaml'
+          cliArguments: '--only-k8s-files'
