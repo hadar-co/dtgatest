@@ -19,4 +19,4 @@ jobs:
         uses: datreeio/action-datree@main
         with:
           path: 'test.yaml'
-          cliArguments: '--only-k8s-files'
+          cliArguments: ''
