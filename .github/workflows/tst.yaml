@@ -18,5 +18,6 @@ jobs:
       - name: Run Datree Policy Check
         uses: hadar-co/action-datree@main
         with:
-          path: 'test.yaml'
+          path: 'testchart'
           cliArguments: ''
+          isHelmChart: true
