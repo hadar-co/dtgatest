@@ -21,7 +21,7 @@ jobs:
           version: latest
 
       - name: build the image
-      run: |
-        docker buildx build \
-          --tag hadarco/citest:latest \
-          --platform linux/amd64,linux/arm64 ./dockerfiles
+        run: |
+          docker buildx build \
+            --tag hadarco/citest:latest \
+            --platform linux/amd64,linux/arm64 ./dockerfiles
