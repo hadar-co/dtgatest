@@ -11,18 +11,18 @@ jobs:
   k8sPolicyCheck:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
-      - name: install buildx
-        id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
-        with:
-          version: latest
-      
-      - name: build the image
-      run: |
-        docker buildx build \
-          --tag hadarco/citest:latest \
-          --platform linux/amd64,linux/arm64 ./dockerfiles
+steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: install buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
+      with:
+        version: latest
+
+    - name: build the image
+    run: |
+      docker buildx build \
+        --tag hadarco/citest:latest \
+        --platform linux/amd64,linux/arm64 ./dockerfiles
