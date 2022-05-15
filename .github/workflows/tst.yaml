@@ -15,9 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: Run Datree Policy Check
-        uses: datreeio/action-datree@main
+      - name: install buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          path: 'testchart'
-          cliArguments: ''
-          isHelmChart: true
+          version: latest
+      
+      - name: build the image
+      run: |
+        docker buildx build \
+          --tag hadarco/citest:latest \
+          --platform linux/amd64,linux/arm64 ./dockerfiles
