@@ -24,4 +24,4 @@ jobs:
         run: |
           docker buildx build \
             --tag hadarco/citest2:latest \
-            --platform linux/amd64,linux/arm64 ./dockerfiles
+            --platform linux/amd64,linux/arm64 ./dockerfiles/datreeci
