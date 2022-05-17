@@ -14,14 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install buildx
-        id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
+      - name: datree
+        uses: hadar-co/action-datree@main
         with:
-          version: latest
-
-      - name: build the image
-        run: |
-          docker buildx build --push \
-            --tag hadarco/citest2:latest \
-            --platform linux/amd64,linux/arm64 ./dockerfiles/datreeci
+          path: 'test.yaml'
+          cliArguments: '--schema-version 1.20.0'
+      
+      - run: echo "- **testing:**  ${{ steps.datree.outputs }}" >> $GITHUB_STEP_SUMMARY
+          
