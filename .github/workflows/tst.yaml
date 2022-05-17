@@ -20,5 +20,5 @@ jobs:
           path: 'test.yaml'
           cliArguments: '--schema-version 1.20.0'
       
-      - run: echo "- **testing:**  ${{ steps.datree.outputs }}" >> $GITHUB_STEP_SUMMARY
+      - run: echo "- **testing:**  ׳קרק" >> $GITHUB_STEP_SUMMARY
           
