@@ -23,5 +23,6 @@ jobs:
           cliArguments: '--schema-version 1.20.0'
       
       - name: showthis
+        if: always()
         run: echo '### Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
           
