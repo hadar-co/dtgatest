@@ -17,7 +17,7 @@ jobs:
       - name: datree
         uses: datreeio/action-datree@main
         with:
-          path: '**/*.yaml'
-          cliArguments: '--only-k8s-files -o simple'
+          path: 'test.yaml'
+          cliArguments: '-o simple'
       
           
