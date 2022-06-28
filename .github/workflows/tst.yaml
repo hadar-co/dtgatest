@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v2
       
       - name: datree
-        uses: hadar-co/action-datree@main
+        uses: datreeio/action-datree@main
         with:
-          path: 'test.yaml'
-          cliArguments: '--schema-version 1.20.0'
+          path: '**/*.yaml'
+          cliArguments: '--only-k8s-files'
       
           
