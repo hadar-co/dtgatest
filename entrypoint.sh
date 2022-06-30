@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/zsh -l
 
 inputfile="$INPUT_FILE"
 options="$INPUT_OPTIONS"
