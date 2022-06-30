@@ -18,7 +18,7 @@ jobs:
         uses: hadar-co/action-datree@main
         with:
           #path: 'test.yaml testchart/templates/deployment.yaml'
-          path: '**/*.yaml'
+          path: '**.yaml'
           cliArguments: ''
       
           
