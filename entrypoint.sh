@@ -5,6 +5,7 @@ options="$INPUT_OPTIONS"
 isHelmChart=$INPUT_ISHELMCHART
 helmArgs="$INPUT_HELMARGUMENTS"
 
+echo "CHECK"
 which zsh
 
 which bash
