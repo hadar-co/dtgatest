@@ -5,6 +5,10 @@ options="$INPUT_OPTIONS"
 isHelmChart=$INPUT_ISHELMCHART
 helmArgs="$INPUT_HELMARGUMENTS"
 
+which zsh
+
+which bash
+
 if [ -z "$DATREE_TOKEN" ]; then
     echo "No account token configured, see https://github.com/datreeio/action-datree for instructions"
     exit 1
