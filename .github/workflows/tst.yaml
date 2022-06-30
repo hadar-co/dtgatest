@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v2
       
       - name: datree
-        uses: datreeio/action-datree@main
+        uses: hadar-co/action-datree@main
         with:
           #path: 'test.yaml testchart/templates/deployment.yaml'
           path: '**/*.yaml'
-          cliArguments: '--only-k8s-files -o simple'
+          cliArguments: ''
       
           
