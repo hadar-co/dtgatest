@@ -18,7 +18,7 @@ jobs:
         uses: hadar-co/action-datree@main
         with:
           #path: 'test.yaml testchart/templates/deployment.yaml'
-          path: 'testchart'
-          cliArguments: "-o simple -s 1.23.0 --only-k8s-files"
+          path: "testchart"
+          cliArguments: "-s 1.23.0"
           isHelmChart: true
 
