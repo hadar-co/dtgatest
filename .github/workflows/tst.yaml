@@ -19,5 +19,5 @@ jobs:
         with:
           #path: 'test.yaml testchart/templates/deployment.yaml'
           path: '**/*.yaml'
-          cliArguments: "-o simple -s 1.23.0 --only-k8s-files"  
+          cliArguments: "-o simple -s 1.23.0"  
 
