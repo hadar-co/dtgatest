@@ -21,4 +21,3 @@ jobs:
           path: "testchart"
           cliArguments: "-s 1.23.0"
           isHelmChart: true
-
