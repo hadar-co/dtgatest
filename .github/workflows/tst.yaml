@@ -11,12 +11,11 @@ jobs:
   imgbuild:
     runs-on: ubuntu-latest
     steps:
-      - name: get drone-datree dockerfile
-        run: "curl -L -O https://raw.githubusercontent.com/datreeio/drone-datree/main/Docker/Dockerfile"
+      - uses: actions/checkout@master
+        with:
+          name: datreeio/drone-datree
+      - run: "ls -al"
       
-      - name: print
-        run: "cat Dockerfile"
-
       #- name: Checkout
       #  uses: actions/checkout@v2
       
