@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          name: datreeio/drone-datree
+          repository: datreeio/drone-datree
       - run: "ls -al"
       
       #- name: Checkout
