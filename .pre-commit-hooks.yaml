@@ -1,5 +1,5 @@
 - id: datree-docker
-  name: datree test, run within docker
+  name: datree test, run in docker
   description: Prevent Kubernetes misconfigurations from reaching production
   types: [file, yaml]
   language: docker_image
