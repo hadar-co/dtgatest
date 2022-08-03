@@ -1,3 +1,5 @@
 #!/bin/bash
 
-sudo apt-get install jq
+PASSED=$(jq .policySummary.totalPassedCount blah.json)
+
+echo 'Passed: $PASSED' >> $GITHUB_STEP_SUMMARY
