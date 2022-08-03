@@ -26,5 +26,6 @@ jobs:
       #    path: "**/*.yaml"
       #    cliArguments: "-s 1.23.1"
       
+      - run: "chmod +x test.sh"
       - run: "./test.sh"
 
