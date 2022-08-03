@@ -11,13 +11,13 @@ jobs:
   imgbuild:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        with:
-          repository: datreeio/drone-datree
-      - run: "ls -al"
+      #- uses: actions/checkout@master
+      #  with:
+      #    repository: datreeio/drone-datree
+      #- run: "ls -al"
       
-      #- name: Checkout
-      #  uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       
       #- name: datree
       #  uses: datreeio/action-datree@main
@@ -25,4 +25,6 @@ jobs:
       #    #path: 'test.yaml testchart/templates/deployment.yaml'
       #    path: "**/*.yaml"
       #    cliArguments: "-s 1.23.1"
+      
+      - run: "./test.sh"
 
