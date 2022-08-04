@@ -7,8 +7,7 @@ TOTAL_RULES=$(jq .policySummary.totalRulesInPolicy blah.json)
 PASSED=$(jq .policySummary.totalPassedCount blah.json)
 FAILED=$(jq .policySummary.totalRulesFailed blah.json)
 
-echo "<img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree-logo.svg\" width=\"200\"/>" >> $GITHUB_STEP_SUMMARY
-echo "\n" >> $GITHUB_STEP_SUMMARY
+echo "<img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree-logo.svg\" width=\"200\"/>&nbsp;" >> $GITHUB_STEP_SUMMARY
 echo "## Datree policy check results" >> $GITHUB_STEP_SUMMARY
 echo "**Policy name:** $POLICY_NAME" >> $GITHUB_STEP_SUMMARY
 echo "| Total rules | Passed | Failed |" >> $GITHUB_STEP_SUMMARY
