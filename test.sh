@@ -22,7 +22,7 @@ echo "**Passed Kubernetes schema validation:** $PASSED_K8S/$CONFIGS_COUNT" >> $G
 echo "**Passed policy check :** $PASSED_POLICY/$CONFIGS_COUNT" >> $GITHUB_STEP_SUMMARY
 
 echo "| Enabled rules in policy $POLICY_NAME | $TOTAL_RULES |" >> $GITHUB_STEP_SUMMARY
-echo "|-|-|-|-|" >> $GITHUB_STEP_SUMMARY
+echo "|-|-|" >> $GITHUB_STEP_SUMMARY
 echo "| **Configs tested against policy** | **$CONFIGS_COUNT** |" >> $GITHUB_STEP_SUMMARY
 echo "| **Total rules evaluated** | **$TOTAL_RULES*$CONFIGS_COUNT** |" >> $GITHUB_STEP_SUMMARY
 echo "| Passed policy check | $PASSED_POLICY |" >> $GITHUB_STEP_SUMMARY
