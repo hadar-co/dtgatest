@@ -3,7 +3,7 @@
 set -x
 
 PASSED_YAML=$(jq .evaluationSummary.passedYamlValidationCount blah.json)
-PASSED_K8S=$(jq .evaluationSummary.k8sValidation blah.json)
+PASSED_K8S=$(jq .evaluationSummary.k8sValidation blah.json | awk -F[\"/] '{print $2}' )
 PASSED_POLICY=$(jq .evaluationSummary.passedPolicyValidationCount blah.json)
 POLICY_NAME=$(jq .policySummary.policyName blah.json)
 TOTAL_RULES=$(jq .policySummary.totalRulesInPolicy blah.json)
