@@ -24,8 +24,15 @@ echo "**Passed policy check :** $PASSED_POLICY/$CONFIGS_COUNT" >> $GITHUB_STEP_S
 echo "| Enabled rules in policy $POLICY_NAME | $TOTAL_RULES |" >> $GITHUB_STEP_SUMMARY
 echo "|-|-|" >> $GITHUB_STEP_SUMMARY
 echo "| **Configs tested against policy** | <div align="center">**$CONFIGS_COUNT**</div> |" >> $GITHUB_STEP_SUMMARY
-echo "| **Total rules evaluated** | **$(($TOTAL_RULES*$CONFIGS_COUNT))** |" >> $GITHUB_STEP_SUMMARY
-echo "| **Total rules skipped** | **$SKIPPED** |" >> $GITHUB_STEP_SUMMARY
-echo "| ⛔ **Total rules failed** ⛔ | **$FAILED** |" >> $GITHUB_STEP_SUMMARY
-echo "| ✅ **Total rules passed** ✅ | **$PASSED** |" >> $GITHUB_STEP_SUMMARY
-echo "| **See all rules in policy** | **[https://app.datree.io](https://app.datree.io)** |" >> $GITHUB_STEP_SUMMARY
+echo "| **Total rules evaluated** | <div align="center">**$(($TOTAL_RULES*$CONFIGS_COUNT))**</div> |" >> $GITHUB_STEP_SUMMARY
+echo "| **Total rules skipped** | <div align="center">**$SKIPPED**</div> |" >> $GITHUB_STEP_SUMMARY
+echo "| ⛔ **Total rules failed** | <div align="center">**$FAILED**</div> |" >> $GITHUB_STEP_SUMMARY
+echo "| ✅ **Total rules passed** | <div align="center">**$PASSED**</div> |" >> $GITHUB_STEP_SUMMARY
+echo "| **See all rules in policy** | <div align="center">**[https://app.datree.io](https://app.datree.io)**</div> |" >> $GITHUB_STEP_SUMMARY
+
+for i in {1..$FAILED}
+do
+   echo "Welcome $i times"
+done
+
+echo "**Failed rules:**" >> $GITHUB_STEP_SUMMARY
