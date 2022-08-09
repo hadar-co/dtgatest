@@ -25,7 +25,9 @@ echo "| Enabled rules in policy $POLICY_NAME | $TOTAL_RULES |" >> $GITHUB_STEP_S
 echo "|-|-|" >> $GITHUB_STEP_SUMMARY
 echo "| **Configs tested against policy** | **$CONFIGS_COUNT** |" >> $GITHUB_STEP_SUMMARY
 echo "| **Total rules evaluated** | **$(($TOTAL_RULES*$CONFIGS_COUNT))** |" >> $GITHUB_STEP_SUMMARY
-echo "| Passed policy check | $PASSED_POLICY |" >> $GITHUB_STEP_SUMMARY
+echo "| <span style="color:blue">**Total rules skipped**</span> | **$SKIPPED** |" >> $GITHUB_STEP_SUMMARY
+echo "| **Total rules failed** | **$FAILED** |" >> $GITHUB_STEP_SUMMARY
+echo "| **Total rules passed** | **$PASSED** |" >> $GITHUB_STEP_SUMMARY
 
 
 echo "" >> $GITHUB_STEP_SUMMARY
