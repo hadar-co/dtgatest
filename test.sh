@@ -30,6 +30,7 @@ echo "| ⛔ **Total rules failed** | <div align="center">**$FAILED**</div> |" >>
 echo "| ✅ **Total rules passed** | <div align="center">**$PASSED**</div> |" >> $GITHUB_STEP_SUMMARY
 echo "| **See all rules in policy** | <div align="center">**[https://app.datree.io](https://app.datree.io)**</div> |" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
+echo "" >> $GITHUB_STEP_SUMMARY
 
 INDEX=0
 while [[ $INDEX -lt $FAILED ]]
