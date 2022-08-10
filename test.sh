@@ -36,7 +36,7 @@ echo "**Failed rules:**" >> $GITHUB_STEP_SUMMARY
 INDEX=1
 while [[ $INDEX -lt $FAILED ]]
 do
-   VIOLATED_RULE=$(jq .policyValidationResults.ruleResults.[1].identifier blah.json)
+   VIOLATED_RULE=$(jq '.policyValidationResults[0] | .ruleResults[$INDEX] | .identifier' blah.json)
    echo "rule number: $INDEX, id: $VIOLATED_RULE" >> $GITHUB_STEP_SUMMARY
    ((INDEX = INDEX + 1))
 done
