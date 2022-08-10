@@ -43,7 +43,7 @@ do
    VIOLATED_RULE_KIND=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurenceDetails | .kind" blah.json)
    VIOLATED_RULE_FAIL_MESSAGE=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .messageOnFailure" blah.json)
    
-   echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURENCES occurence/s]**"" >> $GITHUB_STEP_SUMMARY
+   echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURENCES occurence/s]**" >> $GITHUB_STEP_SUMMARY
    echo "metadata.name: $VIOLATED_RULE_METADATA_NAME (kind: $VIOLATED_RULE_KIND)" >> $GITHUB_STEP_SUMMARY
    echo "💡 $VIOLATED_RULE_FAIL_MESSAGE" >> $GITHUB_STEP_SUMMARY
    
