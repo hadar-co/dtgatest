@@ -38,9 +38,9 @@ while [[ $INDEX -lt $FAILED ]]
 do
    VIOLATED_RULE_ID=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .identifier" blah.json)
    VIOLATED_RULE_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .name" blah.json)
-   VIOLATED_RULE_OCCURRENCES=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails | .occurrences" blah.json)
-   VIOLATED_RULE_METADATA_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails | .metadataName" blah.json)
-   VIOLATED_RULE_KIND=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails | .kind" blah.json)
+   VIOLATED_RULE_OCCURRENCES=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .occurrences" blah.json)
+   VIOLATED_RULE_METADATA_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .metadataName" blah.json)
+   VIOLATED_RULE_KIND=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .kind" blah.json)
    VIOLATED_RULE_FAIL_MESSAGE=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .messageOnFailure" blah.json)
    
    echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURRENCES occurrence/s]**" >> $GITHUB_STEP_SUMMARY
