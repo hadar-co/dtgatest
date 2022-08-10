@@ -31,8 +31,6 @@ echo "| ✅ **Total rules passed** | <div align="center">**$PASSED**</div> |" >>
 echo "| **See all rules in policy** | <div align="center">**[https://app.datree.io](https://app.datree.io)**</div> |" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 
-echo "**Failed rules:**" >> $GITHUB_STEP_SUMMARY
-
 INDEX=0
 while [[ $INDEX -lt $FAILED ]]
 do
