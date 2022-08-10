@@ -30,9 +30,12 @@ echo "| ⛔ **Total rules failed** | <div align="center">**$FAILED**</div> |" >>
 echo "| ✅ **Total rules passed** | <div align="center">**$PASSED**</div> |" >> $GITHUB_STEP_SUMMARY
 echo "| **See all rules in policy** | <div align="center">**[https://app.datree.io](https://app.datree.io)**</div> |" >> $GITHUB_STEP_SUMMARY
 
+echo "**Failed rules:**" >> $GITHUB_STEP_SUMMARY
+
 for i in {1..$FAILED}
 do
-   echo "Welcome $i times"
+   VIOLATED_RULE=$(jq .policyValidationResults.ruleResults.[1].identifier blah.json)
+   echo "rule number: $i, id: $VIOLATED_RULE" >> $GITHUB_STEP_SUMMARY
 done
 
-echo "**Failed rules:**" >> $GITHUB_STEP_SUMMARY
+
