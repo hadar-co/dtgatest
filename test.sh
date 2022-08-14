@@ -12,7 +12,7 @@ PASSED=$(jq .policySummary.totalPassedCount blah.json)
 FAILED=$(jq .policySummary.totalRulesFailed blah.json)
 SKIPPED=$(jq .policySummary.totalSkippedRules blah.json)
 
-echo "<div align="center"><img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree_logo_color.svg\" width=\"350\"/></div>&nbsp;" >> $GITHUB_STEP_SUMMARY
+echo "<img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree_logo_color.svg\" width=\"350\"/>&nbsp;" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "☸️ Want protection on your cluster as well? Try out our [admission webhook!](https://github.com/datreeio/admission-webhook-datree#datree-admission-webhook) ☸️&nbsp;" >> $GITHUB_STEP_SUMMARY
 echo "## Datree policy check summary" >> $GITHUB_STEP_SUMMARY
