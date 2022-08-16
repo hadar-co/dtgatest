@@ -2,15 +2,15 @@
 
 set -x
 
-PASSED_YAML=$(jq .evaluationSummary.passedYamlValidationCount blah.json)
-PASSED_K8S=$(jq .evaluationSummary.k8sValidation blah.json | awk -F[\"/] '{print $2}' )
-PASSED_POLICY=$(jq .evaluationSummary.passedPolicyValidationCount blah.json)
-POLICY_NAME=$(jq .policySummary.policyName blah.json)
-TOTAL_RULES=$(jq .policySummary.totalRulesInPolicy blah.json)
-CONFIGS_COUNT=$(jq .evaluationSummary.configsCount blah.json)
-PASSED=$(jq .policySummary.totalPassedCount blah.json)
-FAILED=$(jq .policySummary.totalRulesFailed blah.json)
-SKIPPED=$(jq .policySummary.totalSkippedRules blah.json)
+PASSED_YAML=$(jq .evaluationSummary.passedYamlValidationCount lastPolicyCheck.json)
+PASSED_K8S=$(jq .evaluationSummary.k8sValidation lastPolicyCheck.json | awk -F[\"/] '{print $2}' )
+PASSED_POLICY=$(jq .evaluationSummary.passedPolicyValidationCount lastPolicyCheck.json)
+POLICY_NAME=$(jq .policySummary.policyName lastPolicyCheck.json)
+TOTAL_RULES=$(jq .policySummary.totalRulesInPolicy lastPolicyCheck.json)
+CONFIGS_COUNT=$(jq .evaluationSummary.configsCount lastPolicyCheck.json)
+PASSED=$(jq .policySummary.totalPassedCount lastPolicyCheck.json)
+FAILED=$(jq .policySummary.totalRulesFailed lastPolicyCheck.json)
+SKIPPED=$(jq .policySummary.totalSkippedRules lastPolicyCheck.json)
 
 echo "<img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree_logo_color.svg\" width=\"350\"/>&nbsp;" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
@@ -36,12 +36,12 @@ echo "" >> $GITHUB_STEP_SUMMARY
 INDEX=0
 while [[ $INDEX -lt $FAILED ]]
 do
-   VIOLATED_RULE_ID=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .identifier" blah.json)
-   VIOLATED_RULE_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .name" blah.json)
-   VIOLATED_RULE_OCCURRENCES=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .occurrences" blah.json)
-   VIOLATED_RULE_METADATA_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .metadataName" blah.json)
-   VIOLATED_RULE_KIND=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .kind" blah.json)
-   VIOLATED_RULE_FAIL_MESSAGE=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .messageOnFailure" blah.json)
+   VIOLATED_RULE_ID=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .identifier" lastPolicyCheck.json)
+   VIOLATED_RULE_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .name" lastPolicyCheck.json)
+   VIOLATED_RULE_OCCURRENCES=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .occurrences" lastPolicyCheck.json)
+   VIOLATED_RULE_METADATA_NAME=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .metadataName" lastPolicyCheck.json)
+   VIOLATED_RULE_KIND=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .occurrencesDetails[] | .kind" lastPolicyCheck.json)
+   VIOLATED_RULE_FAIL_MESSAGE=$(jq ".policyValidationResults[0] | .ruleResults[$INDEX] | .messageOnFailure" lastPolicyCheck.json)
    
    echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURRENCES occurrence/s]**" >> $GITHUB_STEP_SUMMARY
    echo "metadata.name: $VIOLATED_RULE_METADATA_NAME (kind: $VIOLATED_RULE_KIND)" >> $GITHUB_STEP_SUMMARY
