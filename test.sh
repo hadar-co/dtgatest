@@ -5,7 +5,7 @@ set -x
 PASSED_YAML=$(jq .evaluationSummary.passedYamlValidationCount lastPolicyCheck.json)
 PASSED_K8S=$(jq .evaluationSummary.k8sValidation lastPolicyCheck.json | awk -F[\"/] '{print $2}' )
 PASSED_POLICY=$(jq .evaluationSummary.passedPolicyValidationCount lastPolicyCheck.json)
-POLICY_NAME=$(jq .policySummary.policyName lastPolicyCheck.json)
+POLICY_NAME=$(jq .policySummary.policyName lastPolicyCheck.json | awk -F[\"\"] '{print $2}')
 TOTAL_RULES=$(jq .policySummary.totalRulesInPolicy lastPolicyCheck.json)
 CONFIGS_COUNT=$(jq .evaluationSummary.configsCount lastPolicyCheck.json)
 PASSED=$(jq .policySummary.totalPassedCount lastPolicyCheck.json)
