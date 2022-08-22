@@ -47,3 +47,4 @@ jobs:
         with:
           sarif_file: output.sarif
           wait-for-processing: true
+
