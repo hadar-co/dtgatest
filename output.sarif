@@ -80,7 +80,8 @@
                 "metadata.name": "web"
               }
             }
-          ]
+          ],
+          "semanticVersion": "1.0.0"
         }
       },
       "results": [
@@ -184,5 +185,3 @@
     }
   ]
 }
-
-
