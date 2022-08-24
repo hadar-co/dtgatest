@@ -19,13 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      #- name: datree
-      #  uses: datreeio/action-datree@main
-      #  with:
-      #    #path: 'test.yaml testchart/templates/deployment.yaml'
-      #    path: "**/*.yaml"
-      #    cliArguments: "-s 1.23.1"
-      
-      - run: "chmod +x test.sh"
-      - run: "./test.sh"
+      - name: datree
+        uses: hadar-co/action-datree@main
+        with:
+          path: "**/*.yaml"
+          cliArguments: "-s 1.23.1"
+
 
