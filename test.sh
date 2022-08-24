@@ -15,7 +15,7 @@ SKIPPED=$(jq .policySummary.totalSkippedRules lastPolicyCheck.json)
 echo "<img src=\"https://raw.githubusercontent.com/datreeio/datree/main/images/datree_logo_color.svg\" width=\"350\"/>&nbsp;" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "☸️ Want guardrails on your cluster as well? Try out our [admission webhook!](https://github.com/datreeio/admission-webhook-datree#datree-admission-webhook) ☸️&nbsp;  " >> $GITHUB_STEP_SUMMARY
-echo "## Datree policy check summary" >> $GITHUB_STEP_SUMMARY
+echo "## Datree policy check results" >> $GITHUB_STEP_SUMMARY
 echo "**Policy name:** $POLICY_NAME" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "**Passed YAML validation:** $PASSED_YAML/$CONFIGS_COUNT" >> $GITHUB_STEP_SUMMARY
@@ -51,6 +51,8 @@ do
    echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURRENCES occurrence/s]**" >> $GITHUB_STEP_SUMMARY
    echo "metadata.name: $VIOLATED_RULE_METADATA_NAME (kind: $VIOLATED_RULE_KIND)" >> $GITHUB_STEP_SUMMARY
    echo "💡 $VIOLATED_RULE_FAIL_MESSAGE  " >> $GITHUB_STEP_SUMMARY
+   echo "" >> $GITHUB_STEP_SUMMARY
+   echo "---" >> $GITHUB_STEP_SUMMARY
    echo "" >> $GITHUB_STEP_SUMMARY
    
    ((INDEX = INDEX + 1))
