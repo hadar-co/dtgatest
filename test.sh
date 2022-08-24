@@ -51,7 +51,7 @@ do
    echo "❌ **$VIOLATED_RULE_NAME [$VIOLATED_RULE_OCCURRENCES occurrence/s]**" >> $GITHUB_STEP_SUMMARY
    echo "metadata.name: $VIOLATED_RULE_METADATA_NAME (kind: $VIOLATED_RULE_KIND)" >> $GITHUB_STEP_SUMMARY
    echo "💡 $VIOLATED_RULE_FAIL_MESSAGE" >> $GITHUB_STEP_SUMMARY
-   echo "" >> $GITHUB_STEP_SUMMARY
+   echo "---" >> $GITHUB_STEP_SUMMARY
    
    ((INDEX = INDEX + 1))
 done
