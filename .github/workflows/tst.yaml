@@ -22,7 +22,7 @@ jobs:
       - name: datree
         uses: hadar-co/action-datree@main
         with:
-          path: "**/*.yaml"
+          path: "exampleFile.yaml"
           cliArguments: "-s 1.23.1"
 
 
