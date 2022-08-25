@@ -1,25 +1,28 @@
-#!/bin/zsh
+#!/bin/bash
 
-inputfile="$INPUT_FILE"
-options="$INPUT_OPTIONS"
-isHelmChart=$INPUT_ISHELMCHART
+inputpath="$INPUT_PATH"
+cliArguments="$INPUT_CLIARGUMENTS"
+isHelmChart="$INPUT_ISHELMCHART"
 helmArgs="$INPUT_HELMARGUMENTS"
+isKustomization="$INPUT_ISKUSTOMIZATION"
+kustomizeArgs="$INPUT_KUSTOMIZEARGUMENTS"
 
-echo "CHECK"
-which zsh
+printf "datree version: "
+datree version
+printf "\n"
 
-which bash
+# enable recursive globbing (to support **/*.yaml for instance)
+shopt -s globstar
 
 if [ -z "$DATREE_TOKEN" ]; then
-    echo "No account token configured, see https://github.com/datreeio/action-datree for instructions"
+    printf "No account token configured, see https://github.com/datreeio/action-datree for instructions\n"
     exit 1
 fi
 
-if [ $isHelmChart ]; then
-    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | /bin/bash
-    helm plugin install https://github.com/datreeio/helm-datree
-    
-    helm datree test $inputfile $options -- $helmArgs
+if [ "$isHelmChart" = "true" ]; then
+    helm datree test $inputpath $cliArguments -- $helmArgs
+elif [ "$isKustomization" = "true" ]; then
+    datree kustomize test $inputpath $cliArguments -- $kustomizeArgs
 else
-    datree test $inputfile $options  
+    datree test $inputpath $cliArguments  
 fi
