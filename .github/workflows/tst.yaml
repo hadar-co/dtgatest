@@ -22,6 +22,6 @@ jobs:
       - name: datree
         uses: datreeio/action-datree@main
         with:
-          path: "blah.yaml"
+          path: "exampleFile.yaml"
           cliArguments: "-s 1.23.1"
 
