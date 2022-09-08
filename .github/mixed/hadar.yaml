@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Hadar
+metadata:
+  name: rss-site
+  namespace: test
+  labels:
+    owner: tst
+    environment: prod
+    app: web
+spec:
+  replicas: 2
