@@ -8,7 +8,7 @@ env:
   DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
 
 jobs:
-  imgbuild:
+  datree-policy-check:
     runs-on: ubuntu-latest
     steps:
       #- uses: actions/checkout@master
