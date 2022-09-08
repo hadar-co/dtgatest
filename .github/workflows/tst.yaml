@@ -23,4 +23,5 @@ jobs:
         uses: hadar-co/action-datree@main
         with:
           path: "mixed/*.yaml"
+          cliArguments: "--only-k8s-files --ignore-missing-schemas"
 
