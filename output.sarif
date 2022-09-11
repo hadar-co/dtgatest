@@ -91,7 +91,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "fileExample.yaml"
+                  "uri": "exampleFile.yaml"
                 },
                 "region": {
                   "startLine": 1,
