@@ -91,7 +91,15 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                  "uri": "fileExample.yaml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 2
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 2
                 }
               }
             }
