@@ -96,6 +96,13 @@
                 "region": {
                   "startLine": 1,
                   "startColumn": 2
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "exampleFile.yaml"
                 },
                 "region": {
                   "startLine": 10,
