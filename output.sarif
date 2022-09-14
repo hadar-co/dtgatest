@@ -95,7 +95,9 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 2
+                  "endLine": 1,
+                  "startColumn": 2,
+                  "endColumn": 2
                 }
               }
             },
@@ -106,7 +108,9 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 2
+                  "endLine": 10,
+                  "startColumn": 2,
+                  "endColumn": 10
                 }
               }
             }
