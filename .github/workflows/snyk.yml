@@ -16,3 +16,10 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         file: exampleFile.yaml
+    - name: Read package.json
+      id: package
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./snyk.sarif
+    - name: Echo package.json
+      run: echo "${{ steps.package.outputs.content }}"
