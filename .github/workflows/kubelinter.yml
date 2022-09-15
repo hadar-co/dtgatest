@@ -5,23 +5,22 @@ on:
     branches: [ "main" ]
 
 jobs:
-  kubesec:
+  kubelinter:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@v0.0.2
+      - name: Scan repo with kube-linter
+        uses: stackrox/kube-linter-action@v1.0.4
         with:
-          input: exampleFile.yaml
-          exit-code: "0"
-          format: template
-          template: template/sarif.tpl
-          output: kubesec-results.sarif
+          directory: exampleFile.yaml
+          config: .kube-linter/config.yaml
+          format: sarif
+          output-file: kube-linter.sarif
 
       - name: Upload Kubesec scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
         with:
-          sarif_file: kubesec-results.sarif
+          sarif_file: kube-linter.sarif
