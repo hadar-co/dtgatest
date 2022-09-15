@@ -20,11 +20,10 @@ jobs:
           format: template
           template: template/sarif.tpl
           output: kubesec-results.sarif
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
+      - name: Read package.json
+        id: package
+        uses: juliangruber/read-file-action@v1
         with:
-          path: "kubesec-results.sarif"
-
-      - name: File contents
-        run: echo "${ steps.read_file.outputs.contents }"
+          path: ./kubesec-results.sarif
+      - name: Echo package.json
+        run: echo "${{ steps.package.outputs.content }}"
