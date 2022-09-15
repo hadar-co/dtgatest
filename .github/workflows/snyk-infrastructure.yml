@@ -13,9 +13,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@master
+        uses: controlplaneio/kubesec-action@v0.0.2
         with:
-          input: file.yaml
+          input: exampleFile.yaml
           exit-code: "0"
           format: template
           template: template/sarif.tpl
