@@ -16,7 +16,6 @@ jobs:
         uses: stackrox/kube-linter-action@v1.0.4
         with:
           directory: exampleFile.yaml
-          config: .kube-linter/config.yaml
           format: sarif
           output-file: kube-linter.sarif
 
