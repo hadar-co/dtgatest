@@ -13,17 +13,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@v0.0.2
+        uses: controlplaneio/kubesec-action@master
         with:
           input: exampleFile.yaml
-          exit-code: "0"
-          format: template
-          template: template/sarif.tpl
-          output: kubesec-results.sarif
-      - name: Read package.json
-        id: package
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./kubesec-results.sarif
-      - name: Echo package.json
-        run: echo "${{ steps.package.outputs.content }}"
