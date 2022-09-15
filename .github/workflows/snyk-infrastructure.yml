@@ -20,3 +20,5 @@ jobs:
           format: template
           template: template/sarif.tpl
           output: kubesec-results.sarif
+      - name: cat
+        run: cat kubesec-results.sarif
