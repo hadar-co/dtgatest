@@ -16,3 +16,5 @@ jobs:
         uses: controlplaneio/kubesec-action@v0.0.2
         with:
           input: exampleFile.yaml
+          format: template
+          template: template/sarif.tpl
