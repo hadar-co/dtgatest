@@ -22,6 +22,7 @@ jobs:
       - name: datree
         uses: hadar-co/action-datree@main
         with:
-          path: "mixed/*.yaml"
-          cliArguments: "--only-k8s-files --ignore-missing-schemas"
+          path: "."
+          isHelmChart: true
+          cliArguments: ""
 
