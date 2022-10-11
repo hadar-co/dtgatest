@@ -1,15 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "hello-world.fullname" . }}
+  name: {{ .Values.app.name }}-svc
   labels:
-    {{- include "hello-world.labels" . | nindent 4 }}
+    app: {{ .Values.app.name }}
 spec:
-  type: {{ .Values.service.type }}
+  externalTrafficPolicy: Cluster
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: {{ .Values.app.name }}
+    nodePort: {{ .Values.app.nodePort }}
+    port: {{ .Values.app.port }}
+    protocol: {{ .Values.app.protocol }}
+    targetPort: {{ .Values.app.port }}
   selector:
-    {{- include "hello-world.selectorLabels" . | nindent 4 }}
+    app: {{ .Values.app.name }}
+  sessionAffinity: None
+  type: LoadBalancer
