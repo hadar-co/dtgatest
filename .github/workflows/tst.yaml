@@ -22,7 +22,6 @@ jobs:
       - name: datree
         uses: hadar-co/action-datree@main
         with:
-          path: "."
-          isHelmChart: true
+          path: "*.yaml"
           cliArguments: ""
 

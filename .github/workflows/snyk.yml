@@ -1,24 +1,24 @@
-name: snyk
+# name: snyk
 
-on:
-  push:
-    branches: [ "main" ]
+# on:
+#   push:
+#     branches: [ "main" ]
 
-jobs:
-  snyk:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run Snyk to check Kubernetes manifest file for issues
-      continue-on-error: true
-      uses: snyk/actions/iac@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        file: exampleFile.yaml
-    - name: Upload analysis results to GitHub
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: snyk.sarif
-        wait-for-processing: true
+# jobs:
+#   snyk:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Run Snyk to check Kubernetes manifest file for issues
+#       continue-on-error: true
+#       uses: snyk/actions/iac@master
+#       env:
+#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       with:
+#         file: exampleFile.yaml
+#     - name: Upload analysis results to GitHub
+#       uses: github/codeql-action/upload-sarif@v2
+#       with:
+#         sarif_file: snyk.sarif
+#         wait-for-processing: true
 
