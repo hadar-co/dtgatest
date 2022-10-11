@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: datree
-        uses: hadar-co/action-datree@main
+        uses: datreeio/action-datree@main
         with:
           path: "*.yaml"
           cliArguments: ""
