@@ -6,6 +6,8 @@ metadata:
   namespace: demo-ns
   labels:
     app: demo
+  annotations:
+    datree.skip/CONTAINERS_MISSING_LIVENESSPROBE_KEY: irrelevant, skipping.
 spec:
   replicas: 2
   selector:
