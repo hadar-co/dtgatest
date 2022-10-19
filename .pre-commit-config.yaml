@@ -1,0 +1,11 @@
+repos:
+  - repo: https://github.com/datreeio/datree
+    rev: 1.6.37
+    hooks:
+      - id: datree-docker
+        args:
+          - "test"
+          - --no-record
+          - --only-k8s-files
+          - --schema-version=1.23.0
+          - --schema-location='/src/.datree/crdSchemas/{{ .ResourceKind }}_{{ .ResourceAPIVersion }}.json'
