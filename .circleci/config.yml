@@ -5,4 +5,4 @@ workflows:
   policy-check:
     jobs:
       - test:
-        path: exampleFile.yaml
+          path: exampleFile.yaml
