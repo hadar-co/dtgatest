@@ -4,5 +4,5 @@ version: 2.1
 workflows:
   policy-check:
     jobs:
-      - datree/policy-check:
+      - policy-check:
           path: exampleFile.yaml
