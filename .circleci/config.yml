@@ -1,8 +1,8 @@
 orbs:
-  datree: datree/datree@1.1.7
+  datree: datree/datree@1.1.8
 version: 2.1
 workflows:
-  policycheck:
+  policy-check:
     jobs:
       - datree/policy-check:
           path: exampleFile.yaml
