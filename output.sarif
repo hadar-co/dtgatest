@@ -101,19 +101,28 @@
                 }
               }
             },
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
+          "ruleIndex": 0,
+          "message": {
+            "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
+          },
+          "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "exampleFile.yaml"
                 },
                 "region": {
-                  "startLine": 10,
-                  "endLine": 10,
-                  "startColumn": 2,
-                  "endColumn": 10
+                  "startLine": 50,
+                  "endLine": 50,
+                  "startColumn": 8,
+                  "endColumn": 9
                 }
               }
-            }
+            },
           ]
         },
         {
