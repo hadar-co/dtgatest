@@ -6,6 +6,6 @@ workflows:
   policy-check:
     jobs:
       - datree/policy-check:
-          path: 'someDirectory/someHelmChartFolder'
+          path: 'testchart'
           isHelmChart: true
-          cliArguments: '--schema-version 1.20.0'
+          cliArguments: '--schema-version 1.23.0'
