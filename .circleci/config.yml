@@ -7,6 +7,5 @@ workflows:
     jobs:
       - datree/policy-check:
           path: 'exampleFile.yaml'
-          isHelmChart: true
           cliArguments: '--schema-version 1.23.0'
 
