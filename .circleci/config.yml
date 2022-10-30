@@ -1,11 +1,12 @@
 version: 2.1
 orbs:
-  datree: datree/datree@1.1.8
+  datree: datree/datree@1.1.10
 
 workflows:
   policy-check:
     jobs:
       - datree/policy-check:
-          path: 'testchart'
+          path: 'exampleFile.yaml'
           isHelmChart: true
           cliArguments: '--schema-version 1.23.0'
+
