@@ -26,5 +26,6 @@ jobs:
           cliArguments: ""
       
       - name: echo
-        run: cat "$HOME/.datree/config.yaml"
+        if: always()
+        run: cat "$HOME/.datree/summary.md"
 
