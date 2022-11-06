@@ -31,6 +31,6 @@ jobs:
       
       - name: echo
         if: always()
-        run: pwd
+        run: cat "$HOME/summary.md"
       
 
