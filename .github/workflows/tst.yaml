@@ -26,14 +26,14 @@ jobs:
           cliArguments: ""
       
       - name: echo
-        run: cat "/home/runner/datreeSummary.md"
+        run: cat "$HOME/datreeSummary.md"
+        
+      - name: echo
+        if: always()
+        run: ls -al "$HOME"
         
       - name: echo
         if: always()
         run: ls -al /
-        
-      - name: echo
-        if: always()
-        run: ls -al /github/home
       
 
