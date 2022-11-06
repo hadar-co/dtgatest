@@ -1,13 +1,12 @@
-# name: snyk
+name: snyk
+on:
+  push:
+    branches: [ "main" ]
 
-# on:
-#   push:
-#     branches: [ "main" ]
-
-# jobs:
-#   snyk:
-#     runs-on: ubuntu-latest
-#     steps:
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+     steps:
 #     - uses: actions/checkout@v2
 #     - name: Run Snyk to check Kubernetes manifest file for issues
 #       continue-on-error: true
@@ -21,4 +20,11 @@
 #       with:
 #         sarif_file: snyk.sarif
 #         wait-for-processing: true
+
+      - name: install
+        run: curl https://get.datree.io | /bin/bash
+
+      - name: run
+        run: datree test /usr/blah.yaml
+
 
