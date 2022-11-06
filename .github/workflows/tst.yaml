@@ -26,11 +26,11 @@ jobs:
           cliArguments: ""
       
       - name: echo
-        run: cat "$HOME/datreeSummary.md"
+        run: cat "/home/tempo/datreeSummary.md"
         
       - name: echo
         if: always()
-        run: ls -al "$HOME"
+        run: ls -al "/home"
         
       - name: echo
         if: always()
