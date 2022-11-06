@@ -27,10 +27,14 @@ jobs:
       
       - name: echo
         if: always()
-        run: cat "/datreeSummary.md"
+        run: cat "/github/home/datreeSummary.md"
         
       - name: echo
         if: always()
         run: ls -al /
+        
+      - name: echo
+        if: always()
+        run: ls -al /github/home
       
 
