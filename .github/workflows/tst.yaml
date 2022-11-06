@@ -27,5 +27,10 @@ jobs:
       
       - name: echo
         if: always()
-        run: cat "$HOME/.datree/summary.md"
+        run: ls "$HOME"
+      
+      - name: echo
+        if: always()
+        run: pwd
+      
 
