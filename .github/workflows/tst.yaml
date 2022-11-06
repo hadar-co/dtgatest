@@ -27,6 +27,10 @@ jobs:
       
       - name: echo
         if: always()
-        run: cat "/tmp/datreeSummary.md"
+        run: cat "/datreeSummary.md"
+        
+      - name: echo
+        if: always()
+        run: ls -al /
       
 
