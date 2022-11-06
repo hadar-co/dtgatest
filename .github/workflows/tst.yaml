@@ -24,4 +24,7 @@ jobs:
         with:
           path: "exampleFile.yaml"
           cliArguments: ""
+      
+      - name: echo
+        run: cat "$HOME/.datree/summary.md"
 
