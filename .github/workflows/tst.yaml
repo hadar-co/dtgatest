@@ -27,7 +27,7 @@ jobs:
       
       - name: echo
         if: always()
-        run: ls "$HOME"
+        run: ls -al "$HOME"
       
       - name: echo
         if: always()
