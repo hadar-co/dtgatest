@@ -26,7 +26,6 @@ jobs:
           cliArguments: ""
       
       - name: echo
-        if: always()
         run: cat "/github/home/datreeSummary.md"
         
       - name: echo
