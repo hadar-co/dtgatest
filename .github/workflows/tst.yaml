@@ -26,5 +26,5 @@ jobs:
           cliArguments: ""
       
       - name: echo
-        run: if [ -f "$FILE" ]; then "cat '$HOME/.datree/summary.md'"; else "echo cvbcvbcvb"
+        run: cat "$HOME/.datree/config.yaml"
 
