@@ -6,25 +6,5 @@ metadata:
   namespace: demo-ns
   labels:
     app: demo
-  annotations:
-    datree.skip/CONTAINERS_MISSING_LIVENESSPROBE_KEY: irrelevant, skipping.
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: demo
-  template:
-    metadata:
-      labels:
-        app: demo
-    spec:
-      containers:
-      - name: demo-pod
-        image: hadarserver.jfrog.io/default-docker-local/hadar/demo:2.0
-        ports:
-        - containerPort: 80
-      - name: demo-pod2
-        image: bb:latest
-        ports:
-        - containerPort: 80
+
 
