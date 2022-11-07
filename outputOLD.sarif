@@ -9,19 +9,6 @@
           "name": "datree",
           "rules": [
             {
-              "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
-              "shortDescription": {
-                "text": "Ensure each container image has a pinned (tag) version"
-              },
-              "fullDescription": {
-                "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
-              },
-              "helpUri": "https://hub.datree.io/built-in-rules",
-              "help": {
-                "text": "https://hub.datree.io/built-in-rules"
-              }
-            },
-            {
               "id": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
               "shortDescription": {
                 "text": "Ensure each container has a configured memory limit"
@@ -32,6 +19,10 @@
               "helpUri": "https://hub.datree.io/built-in-rules",
               "help": {
                 "text": "https://hub.datree.io/built-in-rules"
+              },
+              "properties": {
+                "kind": "Deployment",
+                "metadata.name": "rss-site"
               }
             },
             {
@@ -45,6 +36,10 @@
               "helpUri": "https://hub.datree.io/built-in-rules",
               "help": {
                 "text": "https://hub.datree.io/built-in-rules"
+              },
+              "properties": {
+                "kind": "Deployment",
+                "metadata.name": "rss-site"
               }
             },
             {
@@ -58,6 +53,27 @@
               "helpUri": "https://hub.datree.io/built-in-rules",
               "help": {
                 "text": "https://hub.datree.io/built-in-rules"
+              },
+              "properties": {
+                "kind": "Deployment",
+                "metadata.name": "rss-site"
+              }
+            },
+            {
+              "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+              "shortDescription": {
+                "text": "Ensure each container image has a pinned (tag) version"
+              },
+              "fullDescription": {
+                "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
+              },
+              "helpUri": "https://hub.datree.io/built-in-rules",
+              "help": {
+                "text": "https://hub.datree.io/built-in-rules"
+              },
+              "properties": {
+                "kind": "Deployment",
+                "metadata.name": "rss-site"
               }
             }
           ],
@@ -66,28 +82,8 @@
       },
       "results": [
         {
-          "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
-          "ruleIndex": 0,
-          "message": {
-            "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 23,
-                  "endLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
-          "ruleIndex": 1,
+          "ruleIndex": 0,
           "message": {
             "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
           },
@@ -95,11 +91,35 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                  "uri": "exampleFile.yaml"
                 },
                 "region": {
-                  "startLine": 34,
-                  "endLine": 1
+                  "startLine": 1,
+                  "endLine": 1,
+                  "startColumn": 2,
+                  "endColumn": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
+          "ruleIndex": 0,
+          "message": {
+            "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "exampleFile.yaml"
+                },
+                "region": {
+                  "startLine": 50,
+                  "endLine": 50,
+                  "startColumn": 8,
+                  "endColumn": 9
                 }
               }
             }
@@ -107,7 +127,7 @@
         },
         {
           "ruleId": "WORKLOAD_INVALID_LABELS_VALUE",
-          "ruleIndex": 2,
+          "ruleIndex": 1,
           "message": {
             "text": "Incorrect value for key(s) under `labels` - the vales syntax is not valid so the Kubernetes engine will not accept it"
           },
@@ -116,10 +136,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 7,
-                  "endLine": 1
                 }
               }
             }
@@ -127,7 +143,7 @@
         },
         {
           "ruleId": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
-          "ruleIndex": 3,
+          "ruleIndex": 2,
           "message": {
             "text": "Missing property object `livenessProbe` - add a properly configured livenessProbe to catch possible deadlocks"
           },
@@ -136,10 +152,22 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 22,
-                  "endLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+          "ruleIndex": 3,
+          "message": {
+            "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
                 }
               }
             }
@@ -149,5 +177,3 @@
     }
   ]
 }
-
-

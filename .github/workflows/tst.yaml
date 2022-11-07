@@ -1,39 +1,39 @@
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
     
-env:
-  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
+# env:
+#   DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
 
-jobs:
-  datree-policy-check:
-    runs-on: ubuntu-latest
-    steps:
-      #- uses: actions/checkout@master
-      #  with:
-      #    repository: datreeio/drone-datree
-      #- run: "ls -al"
+# jobs:
+#   datree-policy-check:
+#     runs-on: ubuntu-latest
+#     steps:
+#       #- uses: actions/checkout@master
+#       #  with:
+#       #    repository: datreeio/drone-datree
+#       #- run: "ls -al"
       
-      - name: Checkout
-        uses: actions/checkout@v3
+#       - name: Checkout
+#         uses: actions/checkout@v3
       
-      - name: datree
-        uses: hadar-co/action-datree@main
-        with:
-          path: "exampleFile.yaml"
-          cliArguments: ""
+#       - name: datree
+#         uses: hadar-co/action-datree@main
+#         with:
+#           path: "exampleFile.yaml"
+#           cliArguments: ""
       
-      - name: echo
-        run: cat "/home/tempo/datreeSummary.md"
+#       - name: echo
+#         run: cat "/home/tempo/datreeSummary.md"
         
-      - name: echo
-        if: always()
-        run: ls -al "/home"
+#       - name: echo
+#         if: always()
+#         run: ls -al "/home"
         
-      - name: echo
-        if: always()
-        run: ls -al /
+#       - name: echo
+#         if: always()
+#         run: ls -al /
       
 

@@ -1,33 +1,33 @@
-name: snyk
-on:
-  push:
-    branches: [ "main" ]
+# name: snyk
+# on:
+#   push:
+#     branches: [ "main" ]
 
-jobs:
-  snyk:
-    runs-on: ubuntu-latest
-    steps:
-#     - uses: actions/checkout@v2
-#     - name: Run Snyk to check Kubernetes manifest file for issues
-#       continue-on-error: true
-#       uses: snyk/actions/iac@master
-#       env:
-#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-#       with:
-#         file: exampleFile.yaml
-#     - name: Upload analysis results to GitHub
-#       uses: github/codeql-action/upload-sarif@v2
-#       with:
-#         sarif_file: snyk.sarif
-#         wait-for-processing: true
+# jobs:
+#   snyk:
+#     runs-on: ubuntu-latest
+#     steps:
+# #     - uses: actions/checkout@v2
+# #     - name: Run Snyk to check Kubernetes manifest file for issues
+# #       continue-on-error: true
+# #       uses: snyk/actions/iac@master
+# #       env:
+# #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+# #       with:
+# #         file: exampleFile.yaml
+# #     - name: Upload analysis results to GitHub
+# #       uses: github/codeql-action/upload-sarif@v2
+# #       with:
+# #         sarif_file: snyk.sarif
+# #         wait-for-processing: true
 
-      - name: install
-        run: curl https://get.datree.io | /bin/bash
+#       - name: install
+#         run: curl https://get.datree.io | /bin/bash
 
-      - name: run
-        run: ls -al /usr/local/bin
+#       - name: run
+#         run: ls -al /usr/local/bin
       
-      - name: run
-        run: ls -al /
+#       - name: run
+#         run: ls -al /
 
 
