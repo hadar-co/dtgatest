@@ -9,6 +9,16 @@
           "name": "datree",
           "rules": [
             {
+              "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+              "shortDescription": {
+                "text": "Ensure each container image has a pinned (tag) version"
+              },
+              "fullDescription": {
+                "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
+              },
+              "helpUri": "https://hub.datree.io/ensure-image-pinned-version"
+            },
+            {
               "id": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
               "shortDescription": {
                 "text": "Ensure each container has a configured memory limit"
@@ -16,7 +26,7 @@
               "fullDescription": {
                 "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
               },
-              "helpUri": "https://hub.datree.io/built-in-rules"
+              "helpUri": "https://hub.datree.io/ensure-memory-limit"
             },
             {
               "id": "WORKLOAD_INVALID_LABELS_VALUE",
@@ -26,7 +36,7 @@
               "fullDescription": {
                 "text": "Incorrect value for key(s) under `labels` - the vales syntax is not valid so the Kubernetes engine will not accept it"
               },
-              "helpUri": "https://hub.datree.io/built-in-rules"
+              "helpUri": "https://hub.datree.io/ensure-labels-value-valid"
             },
             {
               "id": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
@@ -36,17 +46,17 @@
               "fullDescription": {
                 "text": "Missing property object `livenessProbe` - add a properly configured livenessProbe to catch possible deadlocks"
               },
-              "helpUri": "https://hub.datree.io/built-in-rules"
+              "helpUri": "https://hub.datree.io/ensure-liveness-probe"
             },
             {
-              "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+              "id": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
               "shortDescription": {
-                "text": "Ensure each container image has a pinned (tag) version"
+                "text": "Prevent Ingress from forwarding all traffic to a single container"
               },
               "fullDescription": {
-                "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
+                "text": "Incorrect value for key `host` - specify host instead of using a wildcard character (\"*\")"
               },
-              "helpUri": "https://hub.datree.io/built-in-rules"
+              "helpUri": "https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container"
             }
           ],
           "semanticVersion": "1.0.0"
@@ -54,68 +64,8 @@
       },
       "results": [
         {
-          "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
-          "ruleIndex": 0,
-          "message": {
-            "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 34,
-                  "endLine": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "WORKLOAD_INVALID_LABELS_VALUE",
-          "ruleIndex": 1,
-          "message": {
-            "text": "Incorrect value for key(s) under `labels` - the vales syntax is not valid so the Kubernetes engine will not accept it"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 7,
-                  "endLine": 12
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
-          "ruleIndex": 2,
-          "message": {
-            "text": "Missing property object `livenessProbe` - add a properly configured livenessProbe to catch possible deadlocks"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 22,
-                  "endLine": 11
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
-          "ruleIndex": 3,
+          "ruleIndex": 0,
           "message": {
             "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
           },
@@ -135,7 +85,7 @@
         },
         {
           "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
-          "ruleIndex": 3,
+          "ruleIndex": 0,
           "message": {
             "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
           },
@@ -148,6 +98,86 @@
                 "region": {
                   "startLine": 38,
                   "endLine": 18
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
+          "ruleIndex": 1,
+          "message": {
+            "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "WORKLOAD_INVALID_LABELS_VALUE",
+          "ruleIndex": 2,
+          "message": {
+            "text": "Incorrect value for key(s) under `labels` - the vales syntax is not valid so the Kubernetes engine will not accept it"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                },
+                "region": {
+                  "startLine": 7,
+                  "endLine": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
+          "ruleIndex": 3,
+          "message": {
+            "text": "Missing property object `livenessProbe` - add a properly configured livenessProbe to catch possible deadlocks"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
+          "ruleIndex": 4,
+          "message": {
+            "text": "Incorrect value for key `host` - specify host instead of using a wildcard character (\"*\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                },
+                "region": {
+                  "startLine": 72,
+                  "endLine": 11
                 }
               }
             }
