@@ -13,55 +13,50 @@
               "shortDescription": {
                 "text": "Prevent Ingress from forwarding all traffic to a single container"
               },
-              "fullDescription": {
-                "text": "",
+              "helpUri": "https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container",
+              "help": {
                 "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container](https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container)"
-              },
-              "helpUri": "https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container"
+              }
             },
             {
               "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
               "shortDescription": {
                 "text": "Ensure each container image has a pinned (tag) version"
               },
-              "fullDescription": {
-                "text": "",
+              "helpUri": "https://hub.datree.io/ensure-image-pinned-version",
+              "help": {
                 "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-image-pinned-version](https://hub.datree.io/ensure-image-pinned-version)"
-              },
-              "helpUri": "https://hub.datree.io/ensure-image-pinned-version"
+              }
             },
             {
               "id": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
               "shortDescription": {
                 "text": "Ensure each container has a configured memory limit"
               },
-              "fullDescription": {
-                "text": "",
+              "helpUri": "https://hub.datree.io/ensure-memory-limit",
+              "help": {
                 "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-memory-limit](https://hub.datree.io/ensure-memory-limit)"
-              },
-              "helpUri": "https://hub.datree.io/ensure-memory-limit"
+              }
             },
             {
               "id": "WORKLOAD_INVALID_LABELS_VALUE",
               "shortDescription": {
                 "text": "Ensure workload has valid label values"
               },
-              "fullDescription": {
-                "text": "",
+              "helpUri": "https://hub.datree.io/ensure-labels-value-valid",
+              "help": {
                 "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-labels-value-valid](https://hub.datree.io/ensure-labels-value-valid)"
-              },
-              "helpUri": "https://hub.datree.io/ensure-labels-value-valid"
+              }
             },
             {
               "id": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
               "shortDescription": {
                 "text": "Ensure each container has a configured liveness probe"
               },
-              "fullDescription": {
-                "text": "",
+              "helpUri": "https://hub.datree.io/ensure-liveness-probe",
+              "help": {
                 "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-liveness-probe](https://hub.datree.io/ensure-liveness-probe)"
-              },
-              "helpUri": "https://hub.datree.io/ensure-liveness-probe"
+              }
             }
           ],
           "semanticVersion": "1.0.0"
