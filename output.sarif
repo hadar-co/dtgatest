@@ -9,12 +9,24 @@
           "name": "datree",
           "rules": [
             {
+              "id": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
+              "shortDescription": {
+                "text": "Prevent Ingress from forwarding all traffic to a single container"
+              },
+              "fullDescription": {
+                "text": "",
+                "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container](https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container)"
+              },
+              "helpUri": "https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container"
+            },
+            {
               "id": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
               "shortDescription": {
                 "text": "Ensure each container image has a pinned (tag) version"
               },
               "fullDescription": {
-                "text": "For information on how to fix this issue, see:\n[https://hub.datree.io/ensure-image-pinned-version](https://hub.datree.io/ensure-image-pinned-version)"
+                "text": "",
+                "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-image-pinned-version](https://hub.datree.io/ensure-image-pinned-version)"
               },
               "helpUri": "https://hub.datree.io/ensure-image-pinned-version"
             },
@@ -24,7 +36,8 @@
                 "text": "Ensure each container has a configured memory limit"
               },
               "fullDescription": {
-                "text": "For information on how to fix this issue, see:\n[https://hub.datree.io/ensure-memory-limit](https://hub.datree.io/ensure-memory-limit)"
+                "text": "",
+                "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-memory-limit](https://hub.datree.io/ensure-memory-limit)"
               },
               "helpUri": "https://hub.datree.io/ensure-memory-limit"
             },
@@ -34,7 +47,8 @@
                 "text": "Ensure workload has valid label values"
               },
               "fullDescription": {
-                "text": "For information on how to fix this issue, see:\n[https://hub.datree.io/ensure-labels-value-valid](https://hub.datree.io/ensure-labels-value-valid)"
+                "text": "",
+                "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-labels-value-valid](https://hub.datree.io/ensure-labels-value-valid)"
               },
               "helpUri": "https://hub.datree.io/ensure-labels-value-valid"
             },
@@ -44,19 +58,10 @@
                 "text": "Ensure each container has a configured liveness probe"
               },
               "fullDescription": {
-                "text": "For information on how to fix this issue, see:\n[https://hub.datree.io/ensure-liveness-probe](https://hub.datree.io/ensure-liveness-probe)"
+                "text": "",
+                "markdown": "For information on how to fix this issue, see:  [https://hub.datree.io/ensure-liveness-probe](https://hub.datree.io/ensure-liveness-probe)"
               },
               "helpUri": "https://hub.datree.io/ensure-liveness-probe"
-            },
-            {
-              "id": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
-              "shortDescription": {
-                "text": "Prevent Ingress from forwarding all traffic to a single container"
-              },
-              "fullDescription": {
-                "text": "For information on how to fix this issue, see:\n[https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container](https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container)"
-              },
-              "helpUri": "https://hub.datree.io/prevent-ingress-forwarding-traffic-to-single-container"
             }
           ],
           "semanticVersion": "1.0.0"
@@ -64,8 +69,28 @@
       },
       "results": [
         {
-          "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+          "ruleId": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
           "ruleIndex": 0,
+          "message": {
+            "text": "Incorrect value for key `host` - specify host instead of using a wildcard character (\"*\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
+                },
+                "region": {
+                  "startLine": 72,
+                  "endLine": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
+          "ruleIndex": 1,
           "message": {
             "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
           },
@@ -85,7 +110,7 @@
         },
         {
           "ruleId": "CONTAINERS_MISSING_IMAGE_VALUE_VERSION",
-          "ruleIndex": 0,
+          "ruleIndex": 1,
           "message": {
             "text": "Incorrect value for key `image` - specify an image version to avoid unpleasant \"version surprises\" in the future"
           },
@@ -105,7 +130,7 @@
         },
         {
           "ruleId": "CONTAINERS_MISSING_MEMORY_LIMIT_KEY",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "text": "Missing property object `limits.memory` - value should be within the accepted boundaries recommended by the organization"
           },
@@ -125,7 +150,7 @@
         },
         {
           "ruleId": "WORKLOAD_INVALID_LABELS_VALUE",
-          "ruleIndex": 2,
+          "ruleIndex": 3,
           "message": {
             "text": "Incorrect value for key(s) under `labels` - the vales syntax is not valid so the Kubernetes engine will not accept it"
           },
@@ -145,7 +170,7 @@
         },
         {
           "ruleId": "CONTAINERS_MISSING_LIVENESSPROBE_KEY",
-          "ruleIndex": 3,
+          "ruleIndex": 4,
           "message": {
             "text": "Missing property object `livenessProbe` - add a properly configured livenessProbe to catch possible deadlocks"
           },
@@ -157,26 +182,6 @@
                 },
                 "region": {
                   "startLine": 22,
-                  "endLine": 11
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "INGRESS_INCORRECT_HOST_VALUE_PERMISSIVE",
-          "ruleIndex": 4,
-          "message": {
-            "text": "Incorrect value for key `host` - specify host instead of using a wildcard character (\"*\")"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/Users/hadarco/.datree/k8s-demo.yaml"
-                },
-                "region": {
-                  "startLine": 72,
                   "endLine": 11
                 }
               }
