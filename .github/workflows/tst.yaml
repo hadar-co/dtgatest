@@ -23,4 +23,4 @@ jobs:
         uses: hadar-co/action-datree@main
         with:
           path: "crd.yaml"
-          cliArguments: ""
+          cliArguments: "--schema-location https://raw.githubusercontent.com/hadar-co/dtgatest/main/schemas/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
