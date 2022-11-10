@@ -1,0 +1,6 @@
+apiVersion: vald.vdaas.org/v1alpha1
+kind: ValdRelease
+metadata:
+  name: vald-cluster
+# the values of Helm chart for Vald can be placed under the `spec` field.
+spec: {}
