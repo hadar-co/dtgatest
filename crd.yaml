@@ -1,6 +1,62 @@
-apiVersion: vald.vdaas.org/v1alpha1
+apiVersion: vald.vdaas.org/v1
 kind: ValdRelease
 metadata:
   name: vald-cluster
 # the values of Helm chart for Vald can be placed under the `spec` field.
-spec: {}
+spec:
+  defaults:
+    logging:
+      level: debug
+    image:
+      # Please set the specified version, e.g., v1.5.6, instead of latest
+      tag: "latest"
+    server_config:
+      healths:
+        liveness:
+          livenessProbe:
+            initialDelaySeconds: 60
+        readiness:
+          readinessProbe:
+            initialDelaySeconds: 60
+
+    ## vald-lb-gateway settings
+    gateway:
+      lb:
+        minReplicas: 2
+        maxReplicas: 2
+        gateway_config:
+         index_replica: 2
+
+    ## vald-agent settings
+    agent:
+      minReplicas: 6
+      maxReplicas: 6
+      podManagementPolicy: Parallel
+      ngt:
+        dimension: 784
+        distance_type: l2
+        object_type: float
+        # When auto_index_check_duration_limit is minus value, the agent auto indexing is effectively disabled.
+        auto_index_check_duration_limit: "-1s"
+        # When auto_index_duration_limit is minus value, the agent auto indexing is effectively disabled.
+        auto_index_duration_limit: "-1s"
+        auto_create_index_pool_size: 10000
+        default_pool_size: 10000
+
+    ## vald-discoverer settings
+    discoverer:
+      resources:
+        requests:
+          cpu: 150m
+          memory: 50Mi
+
+    ## vald-manager settings
+    manager:
+      index:
+        resources:
+          requests:
+            cpu: 150m
+            memory: 30Mi
+        indexer:
+          auto_index_duration_limit: 1m
+          auto_index_check_duration: 40s
