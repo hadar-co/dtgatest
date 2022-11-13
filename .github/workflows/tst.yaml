@@ -22,5 +22,5 @@ jobs:
       - name: datree
         uses: hadar-co/action-datree@main
         with:
-          path: "blah.yaml"
+          path: "test.yaml"
           cliArguments: "--schema-location https://raw.githubusercontent.com/hadar-co/dtgatest/main/schemas/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
