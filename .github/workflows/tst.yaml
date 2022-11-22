@@ -37,7 +37,8 @@ jobs:
           # Add the path to the configuration file/s that you would like to test.
           # See https://github.com/datreeio/action-datree#usage for all available options.
           path: exampleFile.yaml
-          cliArguments: "-o sarif > /tmp/output.sarif"
+          cliArguments: "-o sarif"
+          outputFile: "/tmp/output.sarif"
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
