@@ -26,7 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Datree policy check
-        continue-on-error: true
         uses: datreeio/action-datree@de67ae7a5133d719dc794e1b75682cd4c5f94d8a
         env:
           # In order to use the Datree action you will need to have a Datree token.
