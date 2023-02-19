@@ -60,3 +60,4 @@ spec:
         indexer:
           auto_index_duration_limit: 1m
           auto_index_check_duration: 40s
+
