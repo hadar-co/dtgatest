@@ -34,5 +34,5 @@ jobs:
         with:
           # Add the path to the configuration file/s that you would like to test.
           # See https://github.com/datreeio/action-datree#usage for all available options.
-          path: dos/exampleFile.yaml
+          path: test.yaml
 
