@@ -27,7 +27,7 @@ jobs:
             }
           relations: |-
             {
-              "env": "envname"
+              "env": "test-env"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
