@@ -1,0 +1,43 @@
+name: UPSERT workflow
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        type: string
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)
+        type: string
+jobs:
+  create-entity-in-port-and-update-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UPSERT Entity
+        uses: port-labs/port-github-action@v1
+        with:
+          identifier: some_identifier
+          title: Some Title
+          team: "[]"
+          icon: DefaultBlueprint
+          blueprint: service
+          properties: |-
+            {
+              "on_call": "string"
+            }
+          relations: |-
+            {
+              "env": "related_entity_identifier"
+            }
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          operation: UPSERT
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: An example of a log message
