@@ -1,61 +1,12 @@
-# Overview
-The Datree CLI provides a policy enforcement solution to run automatic checks for rule violations in Kuberenetes configuration files.  
-This action runs the Datree CLI against given k8s configuration file/s in your repository.<br/>
-To learn more about Datree, visit the [datree website](https://www.datree.io/).
-<br/><br/>
-# Setup
-To get started, you will need to obtain your Datree account token. Follow the simple instructions described [here](https://hub.datree.io/account-token).
-<br/><br/>
-Then, configure your token using one of the following ways:
-* Set DATREE_TOKEN as a [secret](https://docs.github.com/en/actions/reference/encrypted-secrets) or [environment](https://docs.github.com/en/actions/reference/environment-variables) variable.  
-OR
-* Pass the token directly into the action, as described in the "Usage" section of this readme.
-<br/><br/>
-# Usage
-In your workflow, set this action as a step:
-```
-- name: Run Datree's CLI
-        uses: datreeio/action-datree@main
-        with:
-          file: 'someDirectory/someFile.yaml'
-          options: '--output simple --schema-version 1.20.0'
-          token: 'myAccountToken'
-```
-<u>**file**</u> - a path to the file/s you wish to run your Datree test against. This can be a single file or a [Glob pattern](https://www.digitalocean.com/community/tools/glob) signifying a directory.
-**options** - the desired [Datree CLI arguments](https://hub.datree.io/cli-arguments) for the test. In the above example, two of these arguments(--output and --schema-version) are passed.  
-**token** - your Datree account token. See the "Examples" section of this readme for an example that uses a token set as a "secret" variable.
-<br/><br/>
-# Examples
-Here is an example workflow that uses this action to run a Datree policy check on a all of the .yaml files under the current directory, on every push/pull request:
-```yaml
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-    
-env:
-  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
+# Lorem ipsum
 
-jobs:
-  k8s-policy-check:
-    runs-on: ubuntu-latest
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam finibus diam vitae dolor accumsan, condimentum interdum turpis euismod. Sed convallis, ligula nec sagittis semper, leo urna pretium orci, sed feugiat velit lacus placerat odio. Vivamus interdum felis nec mauris blandit elementum. Sed vel augue suscipit, venenatis nunc nec, maximus lorem. Vestibulum lectus lectus, scelerisque non risus vel, congue molestie leo. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus in rhoncus tellus, et gravida elit.
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
-      - name: Run Datree's CLI
-        uses: hadorco/Datree-cli-action@main
-        with:
-          file: '**/*.yaml'
-          options: ''
-          token: ''
-```
-<br/>
+Etiam aliquet libero id scelerisque fringilla. Praesent non pulvinar augue, sit amet auctor lacus. Nullam dolor libero, mattis vitae dignissim a, lobortis at risus. Integer imperdiet lacinia purus, at maximus sapien ultrices vitae. Cras id arcu felis. Proin commodo pellentesque elit, ac luctus ante aliquet eu. In sollicitudin risus sit amet justo eleifend, eget molestie elit tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus lorem ut tempus euismod. Mauris porta nisi a sapien accumsan, a bibendum justo finibus. Nulla sagittis euismod dignissim. Nullam sed lacus lectus. Maecenas a consectetur turpis.
 
-<!--# Output
-The output of this action will look something like this:
+Donec aliquam mauris id nisi molestie accumsan. Proin vestibulum, lorem et tempus ullamcorper, neque diam mollis ante, eu mattis arcu ipsum a est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam et ligula nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean rhoncus justo massa, auctor dignissim est ornare eu. Curabitur porttitor enim quis faucibus posuere. Cras tincidunt imperdiet dui at fermentum. Nulla nec auctor elit. Sed id enim dui. Nunc nec gravida ligula, sit amet vulputate nibh. Quisque ultricies dapibus bibendum. Suspendisse auctor, sapien non blandit semper, magna urna scelerisque justo, at porttitor urna ex a mi. Donec at nisl elementum, efficitur magna consectetur, aliquet ligula. Mauris dignissim lectus id dignissim venenatis. Quisque ultrices suscipit placerat.
 
-![Alt text](/Resources/output.jpg?raw=true "Optional Title")
---!>
+Sed at arcu sit amet augue porta lacinia vel quis tellus. Suspendisse vitae quam sit amet nisi rhoncus cursus. Sed tempor quam quis ornare convallis. In convallis condimentum eros sit amet tempor. Cras pulvinar elementum orci vel consequat. Ut tristique justo purus, eu vehicula neque pellentesque eget. Pellentesque porta a diam sed iaculis. Donec at neque sit amet felis pellentesque fermentum ut vitae libero. Nam facilisis sollicitudin magna ut rutrum. In vulputate placerat est et lacinia. Nunc rutrum, elit sed rutrum suscipit, est lacus dictum nulla, sit amet congue libero erat id libero. Donec maximus nisl non sem luctus, a vestibulum lacus ultricies. Nullam ut pharetra magna, scelerisque facilisis tortor. Nulla facilisi.
+
+Donec et nibh aliquet, laoreet felis id, consectetur sem. Donec in bibendum ex, eget tempus nisi. Integer pretium libero sed pellentesque dignissim. Aliquam diam odio, convallis vitae consequat varius, varius ac erat. Praesent ac felis eu erat fermentum dictum. Nunc interdum ex et ante bibendum, quis congue leo semper. Nunc a rutrum nisl.
+
