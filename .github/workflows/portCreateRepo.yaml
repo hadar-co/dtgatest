@@ -17,6 +17,19 @@ jobs:
       - uses: actions/checkout@v3
       - id: echo-deploy
         run: echo ${{ inputs.name }}
+
+  try:
+    runs-on: ubuntu-latest
+    name: tryRepo
+    steps:
+      - name: another
+        uses: octobay/create-repository-action@v1
+        with:
+          name: '${{ inputs.name }}'
+          org: 'hadar-co'
+          access-token: 'portAction'
+          private-repo: true
+          initalize-repo: true
   
   create-repository:
     runs-on: ubuntu-latest
