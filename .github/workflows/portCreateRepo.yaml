@@ -17,10 +17,19 @@ jobs:
       - uses: actions/checkout@v3
       - id: echo-deploy
         run: echo ${{ inputs.name }}
+  
   create-repository:
     runs-on: ubuntu-latest
     name: Creating Organization Repository
     steps:
+      - name: another
+        uses: octobay/create-repository-action@v1
+        with:
+          name: '${{ inputs.name }}'
+          org: 'hadar-co'
+          access-token: 'portAction'
+          private-repo: true
+          initalize-repo: true
       - name: Use Node.js
         uses: actions/setup-node@v2
       - name: Creating GitHub Organization Repository
