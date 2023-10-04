@@ -1,1 +1,20 @@
+name: Create repo
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        required: true
+        description: "Repo name to deploy"
+        type: string
+      port_payload:
+        required: true
+        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: echo-deploy
+        run: echo ${{ inputs.name }}
 
