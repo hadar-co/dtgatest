@@ -17,7 +17,7 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
             name: ${{ inputs.name }}
-            org: ${{ github.repository_owner }}
+            org: 'Port-samples'
             access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
             private-repo: true
             initalize-repo: true
