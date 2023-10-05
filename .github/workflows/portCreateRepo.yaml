@@ -15,13 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     name: Creating Organization Repository
     steps:
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-      - name: Creating GitHub Organization Repository
-        uses: repo-ctrl/create-repo-action@main 
-        id: create-repo
-        with:
-          repo-name: '${{ inputs.name }}'
-          org-admin-token: '${{ secrets.ORG_ADMIN_TOKEN }}'
-      - name: Log URL to the repo
-        run: echo "The new repo is ${{ steps.create-repo.outputs.repo-url }}"
+      - name: Create Private Repository
+        env:
+          GH_PAT: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          # Get the current organization and repository name
+          ORG=$(basename $GITHUB_REPOSITORY)
+          REPO_NAME='${{ inputs.name }}'
+
+          # Create the repository using the GitHub API
+          curl -X POST \
+            -H "Authorization: token $GH_PAT" \
+            -d '{
+              "name": "'"$REPO_NAME"'",
+              "private": true
+            }' \
+            "https://api.github.com/orgs/$ORG/repos"
