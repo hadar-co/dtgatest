@@ -3,8 +3,6 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        required: true
-        description: "Repo name to deploy"
         type: string
       port_payload:
         required: true
@@ -23,11 +21,3 @@ jobs:
             access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
             private-repo: true
             initalize-repo: true
-      # - name: Create Repository
-      #  env:
-       #   GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }} # Replace with your secret's name
-        # run: |
-          # Create a repository using the GitHub REST API
-         # org_name="port-samples"
-          # repo_name="${{ inputs.name }}"
-          # curl -X POST -H "Authorization: token $GH_TOKEN" "https://api.github.com/orgs/$org_name/repos" -d "{\"name\":\"$repo_name\",\"private\":false}"
