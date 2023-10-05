@@ -1,4 +1,4 @@
-name: Create repo
+name: Port demo action
 on:
   workflow_dispatch:
     inputs:
@@ -16,27 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: echo-deploy
-        run: echo ${{ inputs.name }}
+        run: echo ${{ inputs.name }} \
+             sleep 2 \
+             echo "another line"
   
-  create-repository:
-    runs-on: ubuntu-latest
-    name: Creating Organization Repository
-    steps:
-      - name: another
-        uses: octobay/create-repository-action@v1
-        with:
-          name: '${{ inputs.name }}'
-          org: 'hadar-co'
-          access-token: 'portAction'
-          private-repo: true
-          initalize-repo: true
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-      - name: Creating GitHub Organization Repository
-        uses: repo-ctrl/create-repo-action@main 
-        id: create-repo
-        with:
-          repo-name: '${{ inputs.name }}'
-          org-admin-token: '${{ secrets.ORG_ADMIN_TOKEN }}'
-      - name: Log URL to the repo
-        run: echo "The new repo is ${{ steps.create-repo.outputs.repo-url }}"
+
