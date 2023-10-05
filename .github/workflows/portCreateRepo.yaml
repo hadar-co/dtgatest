@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: create repo
         uses: octobay/create-repository-action@v1
-          with:
+        with:
             name: ${{ inputs.name }}
             org: ${{ github.repository_owner }}
             access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
