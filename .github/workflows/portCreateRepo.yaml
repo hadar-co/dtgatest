@@ -18,16 +18,16 @@ jobs:
       - name: create repo
         uses: octobay/create-repository-action@v1
           with:
-            name: '${{ inputs.name }}'
-            org: '${{ github.repository_owner }}'
-            access-token: '${{ secrets.ORG_ADMIN_TOKEN }}'
+            name: ${{ inputs.name }}
+            org: ${{ github.repository_owner }}
+            access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
             private-repo: true
             initalize-repo: true
-      #- name: Create Repository
+      # - name: Create Repository
       #  env:
        #   GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }} # Replace with your secret's name
-        #run: |
+        # run: |
           # Create a repository using the GitHub REST API
          # org_name="port-samples"
-          #repo_name="${{ inputs.name }}"
-          #curl -X POST -H "Authorization: token $GH_TOKEN" "https://api.github.com/orgs/$org_name/repos" -d "{\"name\":\"$repo_name\",\"private\":false}"
+          # repo_name="${{ inputs.name }}"
+          # curl -X POST -H "Authorization: token $GH_TOKEN" "https://api.github.com/orgs/$org_name/repos" -d "{\"name\":\"$repo_name\",\"private\":false}"
