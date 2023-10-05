@@ -15,19 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Creating Organization Repository
     steps:
-      - name: Create Private Repository
+      - name: Create Repository
         env:
-          GH_PAT: ${{ secrets.ORG_ADMIN_TOKEN }}
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }} # Replace with your secret's name
         run: |
-          # Get the current organization and repository name
-          ORG=$(basename $GITHUB_REPOSITORY)
-          REPO_NAME='${{ inputs.name }}'
-
-          # Create the repository using the GitHub API
-          curl -X POST \
-            -H "Authorization: token $GH_PAT" \
-            -d '{
-              "name": "'"$REPO_NAME"'",
-              "private": true
-            }' \
-            "https://api.github.com/orgs/$ORG/repos"
+          # Create a repository using the GitHub REST API
+          org_name="hadar-co"
+          repo_name="new-repo-name"
+          curl -X POST -H "Authorization: token $GH_TOKEN" "https://api.github.com/orgs/$org_name/repos" -d "{\"name\":\"$repo_name\",\"private\":false}"
