@@ -19,7 +19,7 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ inputs.name }}
-          org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
+          org: "Port-samples" # change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }} # the secret we created in the previous step
           private-repo: true
           initialize-repo: true
