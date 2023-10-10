@@ -38,7 +38,7 @@ jobs:
             {
               "readme": file://README.md,
               "url": .html_url,
-              "language": .language
+              "language": .language,
             }
           relations: "{}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
