@@ -1,5 +1,3 @@
-# portCreateRepo.yaml
-
 name: Port action - create repository
 on:
   workflow_dispatch:
@@ -19,32 +17,13 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ inputs.name }}
-          org: "Port-samples" # change this to the org name in which you want to create the new repo
+          org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }} # the secret we created in the previous step
           private-repo: true
           initialize-repo: true
-  create-entity-in-port-and-update-run:
+  reflect-action-result:
     runs-on: ubuntu-latest
     steps:
-      - name: Update service entity in Port  # Create an entity in Port for the new service
-        uses: port-labs/port-github-action@v1
-        with:
-          identifier: ${{ inputs.name }}
-          title: ${{ inputs.name }}
-          team: "[]"
-          icon: microservice
-          blueprint: service
-          properties: |-
-            {
-              "readme": file://README.md,
-              "url": .html_url,
-              "language": .language,
-            }
-          relations: "{}"
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
       - name: Create a log message  # Send action progress/result back to Port
         uses: port-labs/port-github-action@v1
         with:
