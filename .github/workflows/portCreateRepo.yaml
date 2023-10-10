@@ -1,4 +1,6 @@
-name: Port demo action
+# portCreateRepo.yaml
+
+name: Port action - create repository
 on:
   workflow_dispatch:
     inputs:
@@ -6,18 +8,48 @@ on:
         type: string
       port_payload:
         required: true
-        description: Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)
+        description: Port's payload, including details for who triggered the action and general context
         type: string
 jobs:
   create-repository:
     runs-on: ubuntu-latest
-    name: Creating Organization Repository
+    name: Create repository
     steps:
-      - name: create repo
+      - name: Create service
         uses: octobay/create-repository-action@v1
         with:
-            name: ${{ inputs.name }}
-            org: 'Port-samples'
-            access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
-            private-repo: true
-            initalize-repo: true
+          name: ${{ inputs.name }}
+          org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
+          access-token: ${{ secrets.ORG_ADMIN_TOKEN }} # the secret we created in the previous step
+          private-repo: true
+          initialize-repo: true
+  create-entity-in-port-and-update-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update service entity in Port  # Create an entity in Port for the new service
+        uses: port-labs/port-github-action@v1
+        with:
+          identifier: ${{ inputs.name }}
+          title: ${{ inputs.name }}
+          team: "[]"
+          icon: DefaultBlueprint
+          blueprint: service
+          properties: |-
+            {
+              "readme": "string",
+              "url": "https://example.com",
+              "language": "string"
+            }
+          relations: "{}"
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: UPSERT
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+      - name: Create a log message  # Send action progress/result back to Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: New service "${{ inputs.name }}" created successfully 🚀
