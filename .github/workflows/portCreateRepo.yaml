@@ -34,6 +34,12 @@ jobs:
           team: "[]"
           icon: microservice
           blueprint: service
+          properties: |-
+            {
+              "readme": file://README.md,
+              "url": .html_url,
+              "language": .language
+            }
           relations: "{}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
