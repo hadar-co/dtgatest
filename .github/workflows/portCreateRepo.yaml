@@ -17,8 +17,8 @@ on:
         required: true
 jobs:
   scaffold-service:
-    env:
-      ORG_NAME: hadar-co
+    # env:
+    #   ORG_NAME: hadar-co
     runs-on: ubuntu-latest
     steps:
       - uses: port-labs/cookiecutter-gha@v1
