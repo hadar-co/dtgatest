@@ -32,7 +32,7 @@ jobs:
           portUserInputs: '{"cookiecutter_app_name": "${{ fromJson(inputs.port_payload).payload.properties.service_name }}" }'
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "service"
-          organizationName: ${{ env.ORG_NAME }}
+          organizationName: ""
 
       - name: "Report deployment Entity to port 🚢"
         uses: port-labs/port-github-action@v1
