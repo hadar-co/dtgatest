@@ -17,8 +17,8 @@ on:
         required: true
 jobs:
   scaffold-service:
-    # env:
-    #   ORG_NAME: hadar-co
+    env:
+      ORG_NAME: hadar-co
     runs-on: ubuntu-latest
     steps:
       - uses: port-labs/cookiecutter-gha@v1
@@ -32,7 +32,7 @@ jobs:
           portUserInputs: '{"cookiecutter_app_name": "${{ fromJson(inputs.port_payload).payload.properties.service_name }}" }'
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "service"
-          organizationName: ""
+          organizationName: ${{ env.ORG_NAME }}
 
       - name: "Report deployment Entity to port 🚢"
         uses: port-labs/port-github-action@v1
