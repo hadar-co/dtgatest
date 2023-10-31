@@ -21,7 +21,7 @@ jobs:
       ORG_NAME: hadar-co
     runs-on: ubuntu-latest
     steps:
-      - uses: hadar-co/cookiecutter-gha@v1
+      - uses: hadar-co/cookiecutter-gha@main
         id: scaff
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
