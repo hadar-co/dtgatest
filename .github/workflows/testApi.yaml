@@ -1,0 +1,20 @@
+on:
+  push:
+    paths:
+    - 'testchart/templates/**'
+
+jobs:
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://avatars.githubusercontent.com/u/97434394?s=200&v=4
+          SLACK_MESSAGE: "User: ${{ github.actor }} made a change to the API schema. PR: https://github.com/hadar-co/dtgatest/pull/${{ github.event.number }}"
+          SLACK_TITLE: "API change"
+          SLACK_USERNAME: Deployment Bot
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
