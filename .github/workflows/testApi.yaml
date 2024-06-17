@@ -1,22 +1,16 @@
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - 'apps/port-api/src/api/routes/**'
+  workflow_dispatch:
+
 
 jobs:
-  slackNotification:
-    name: Slack Notification
+  send_message:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://avatars.githubusercontent.com/u/97434394?s=200&v=4
-          SLACK_MESSAGE: "User: ${{ github.actor }} made a change to the API schema."
-          SLACK_TITLE: "API change"
-          SLACK_USERNAME: Deployment Bot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+    - uses: actions/checkout@v4
+    - name: create an issue
+      uses: dacbd/create-issue-action@main
+      with:
+        token: ${{ github.token }}
+        repo: ${{ github.context.repo.repo}}
+        title: Simple test issue
+        body: my new issue
