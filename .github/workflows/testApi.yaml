@@ -1,16 +1,18 @@
 on:
   workflow_dispatch:
-
+    inputs:
+      # Note that the inputs are the same as the payload (workflowInputs) defined in the automation
+      rule_result_name:
+        description: 'The rule result name'
+        required: true
+        type: string
+      entity_link:
+        description: 'A link to the evaluated entity'
+        required: true
+        type: string
 
 jobs:
   send_message:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: create an issue
-      uses: dacbd/create-issue-action@main
-      with:
-        token: ${{ github.token }}
-        repo: ${{ github.context.repo.repo}}
-        title: Simple test issue
-        body: my new issue
+    - run: echo ${{ inputs.rule_result_name }} and also ${{ inputs.entity_link }}
