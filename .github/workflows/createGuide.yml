@@ -39,9 +39,9 @@ jobs:
           git push origin "add-guide-${{ github.event.inputs.title }}"
 
       - name: Create Pull Request
-        uses: actions/create-pull-request@v1
+        uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "add-guide-${{ github.event.inputs.title }}"
-          title: "Add guide: ${{ github.event.inputs.title }}"
-          body: "This pull request adds a new guide for ${{ github.event.inputs.title }}."
+          title: 'Add new guide'
+          body: 'This PR adds a new guide to the repository.'
+          base: main
+          branch: ${{ github.head_ref }}
