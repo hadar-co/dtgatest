@@ -5,7 +5,7 @@ async function generateGuide(title, description) {
   try {
     // Send a request to Google Gemini API
     const response = await axios.post(
-      'https://generativeai.googleapis.com/v1beta2/models/text-bison-001:generateText',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
       {
         prompt: `${title} - ${description}`,
         temperature: 0.7
