@@ -1,4 +1,4 @@
-name: Generate Guide and Create Pull Request
+name: Generate Guide with Google Gemini API
 
 on:
   workflow_dispatch:
@@ -6,42 +6,46 @@ on:
       title:
         description: 'Title of the Guide'
         required: true
-        type: string
+        default: 'Ingest Cloud Resources using New Relic'
       description:
         description: 'Description of the Guide'
         required: true
-        type: string
+        default: 'This guide should be structured in the same way other guides in docs.getport.io/guides are structured.'
+      model:
+        description: 'The Google Gemini Model to use'
+        required: false
+        default: 'projects/your-project-id/locations/global/models/gemini-1.5-flash-latest'
 
 jobs:
-  generate_guide:
+  generate-guide:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          npm install axios
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: Generate Guide Content
-        env:
-          GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
-        run: |
-          node .github/scripts/generateGuide.js "${{ github.event.inputs.title }}" "${{ github.event.inputs.description }}"
+    - name: Install dependencies
+      run: |
+        npm install googleapis
 
-      - name: Commit and Push Guide
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b "add-guide-${{ github.event.inputs.title }}"
-          git add guide.md
-          git commit -m "Add guide: ${{ github.event.inputs.title }}"
-          git push origin "add-guide-${{ github.event.inputs.title }}"
+    - name: Generate Guide Content using Gemini API
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        TITLE: ${{ github.event.inputs.title }}
+        DESCRIPTION: ${{ github.event.inputs.description }}
+        MODEL: ${{ github.event.inputs.model }}
+      run: |
+        node generateGuide.js
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          title: 'Add new guide'
-          body: 'This PR adds a new guide to the repository.'
-          base: main
-          branch: ${{ github.head_ref }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        title: 'Add new guide'
+        body: 'This PR adds a new guide to the repository.'
+        base: main
+        branch: ${{ github.head_ref }}
