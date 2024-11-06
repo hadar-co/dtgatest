@@ -1,32 +1,51 @@
-const axios = require('axios');
-const fs = require('fs');
+const { google } = require('googleapis');
+const path = require('path');
 
-async function generateGuide(title, description) {
+// Path to your service account key file
+const keyFilePath = path.join(__dirname, process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
+// Create a JWT (JSON Web Token) client using the service account
+const auth = new google.auth.GoogleAuth({
+  keyFile: keyFilePath,
+  scopes: 'https://www.googleapis.com/auth/cloud-platform',
+});
+
+// The Google Gemini API client
+const gemini = google.generativelanguage('v1beta2');
+
+async function generateContent() {
   try {
-    // Send a request to Google Gemini API
-    const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
-      {
-        prompt: `${title} - ${description}`,
-        temperature: 0.7
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${process.env.GOOGLE_GEMINI_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    // Authenticate using the service account
+    const authClient = await auth.getClient();
 
-    const guideMarkdown = response.data.candidates[0].output;
-    fs.writeFileSync('guide.md', guideMarkdown);
+    // Use the input values passed through the environment variables
+    const title = process.env.TITLE || 'Default Guide Title';
+    const description = process.env.DESCRIPTION || 'Default description of the guide.';
+    const model = process.env.MODEL || 'projects/your-project-id/locations/global/models/gemini-1.5-flash-latest';
+
+    // Construct the prompt dynamically
+    const prompt = `Create a guide titled '${title}' with the following description: ${description}. Format the guide in markdown.`; 
+
+    // Request to generate content from Gemini API
+    const res = await gemini.projects.locations.models.texts.generateText({
+      auth: authClient,
+      requestBody: {
+        model: model,
+        instances: [{ prompt }],
+      },
+    });
+
+    // Assuming the response contains the generated markdown content
+    const guideMarkdown = res.data.generatedContent;
     console.log(`Generated Markdown:\n${guideMarkdown}`);
+
+    // Write the generated content to a markdown file
+    const fs = require('fs');
+    fs.writeFileSync('guide.md', guideMarkdown);
+
   } catch (error) {
-    console.error('Error generating guide:', error);
-    process.exit(1);
+    console.error('Error generating guide:', error.message);
   }
 }
 
-// Accept title and description from the command-line arguments
-const [title, description] = process.argv.slice(2);
-generateGuide(title, description);
+generateContent();
