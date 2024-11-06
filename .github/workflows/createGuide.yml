@@ -27,7 +27,7 @@ jobs:
         env:
           GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
         run: |
-          node generateGuide.js "${{ github.event.inputs.title }}" "${{ github.event.inputs.description }}"
+          node .github/scripts/generateGuide.js "${{ github.event.inputs.title }}" "${{ github.event.inputs.description }}"
 
       - name: Commit and Push Guide
         run: |
