@@ -1,4 +1,4 @@
-name: Generate Guide with Google Gemini API
+name: Generate Guide with ChatGPT API
 
 on:
   workflow_dispatch:
@@ -6,15 +6,9 @@ on:
       title:
         description: 'Title of the Guide'
         required: true
-        default: 'Ingest Cloud Resources using New Relic'
       description:
         description: 'Description of the Guide'
         required: true
-        default: 'This guide should be structured in the same way other guides in docs.getport.io/guides are structured.'
-      model:
-        description: 'The Google Gemini Model to use'
-        required: false
-        default: 'projects/your-project-id/locations/global/models/gemini-1.5-flash-latest'
 
 jobs:
   generate-guide:
@@ -24,28 +18,48 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: |
-        npm install googleapis
-
-    - name: Generate Guide Content using Gemini API
+    - name: Generate Guide Content using ChatGPT API
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        TITLE: ${{ github.event.inputs.title }}
-        DESCRIPTION: ${{ github.event.inputs.description }}
-        MODEL: ${{ github.event.inputs.model }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
-        node generateGuide.js
+        # Set the prompt using the inputs
+        PROMPT="Create a markdown guide for Port (docs.getport.io) titled '${{ github.event.inputs.title }}'. Description: ${{ github.event.inputs.description }}"
+
+        # Call the OpenAI API to generate content
+        RESPONSE=$(curl -sS -X POST https://api.openai.com/v1/chat/completions \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $OPENAI_API_KEY" \
+          -d '{
+                "model": "gpt-3.5-turbo",
+                "messages": [{"role": "user", "content": "'"$PROMPT"'"}],
+                "temperature": 0.7
+              }')
+
+        # Extract the generated guide content from the API response
+        GUIDE_CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+
+        # Save the guide content to a markdown file
+        echo "$GUIDE_CONTENT" > guide.md
+
+    - name: Commit New Guide
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git checkout -b generate-guide-branch
+        git add guide.md
+        git commit -m "Add generated guide: ${{ github.event.inputs.title }}"
+
+    - name: Push Changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        branch: generate-guide-branch
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
       with:
-        title: 'Add new guide'
-        body: 'This PR adds a new guide to the repository.'
+        branch: generate-guide-branch
+        title: "Add Generated Guide: ${{ github.event.inputs.title }}"
+        body: "This PR adds a new guide generated based on the provided title and description."
         base: main
-        branch: ${{ github.head_ref }}
+        labels: "documentation,auto-generated"
