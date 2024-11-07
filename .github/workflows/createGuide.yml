@@ -41,19 +41,17 @@ jobs:
         # Save the guide content to a markdown file
         echo "$GUIDE_CONTENT" > guide.md
 
-    - name: Commit New Guide
+    - name: Configure Git
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Create and Push Branch with Guide
+      run: |
         git checkout -b generate-guide-branch
         git add guide.md
         git commit -m "Add generated guide: ${{ github.event.inputs.title }}"
-
-    - name: Push Changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        branch: generate-guide-branch
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        git push origin generate-guide-branch
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
