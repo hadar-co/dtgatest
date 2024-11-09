@@ -61,6 +61,7 @@ jobs:
             \"assistant_id\": \"${{ env.ASSISTANT_ID }}\",
             \"instructions\": \"Please assist with the provided title and description.\"
           }")
+        echo "Run Response: $RUN_RESPONSE"
         RUN_ID=$(echo "$RUN_RESPONSE" | jq -r '.id')
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
       shell: bash
