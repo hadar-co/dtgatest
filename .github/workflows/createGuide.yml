@@ -13,33 +13,85 @@ on:
 jobs:
   generate-guide:
     runs-on: ubuntu-latest
-
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ASSISTANT_ID: 'asst_401AkHGtgCQEtJBJQecK01Cb'  # Replace with your actual assistant ID
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Generate Guide Content using ChatGPT API
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    - name: Set up variables
       run: |
-        # Set the prompt using the inputs
-        PROMPT="Create a markdown guide for Port (docs.getport.io) titled '${{ github.event.inputs.title }}'. Description: ${{ github.event.inputs.description }}"
+        echo "TITLE=${{ github.event.inputs.title }}" >> $GITHUB_ENV
+        echo "DESCRIPTION=${{ github.event.inputs.description }}" >> $GITHUB_ENV
 
-        # Call the OpenAI API to generate content
-        RESPONSE=$(curl -sS -X POST https://api.openai.com/v1/chat/completions \
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Create a thread
+      id: create_thread
+      run: |
+        THREAD_RESPONSE=$(curl -s https://api.openai.com/v1/threads \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer $OPENAI_API_KEY" \
-          -d '{
-                "model": "gpt-3.5-turbo",
-                "messages": [{"role": "user", "content": "'"$PROMPT"'"}],
-                "temperature": 0.7
-              }')
+          -H "OpenAI-Beta: assistants=v2" \
+          -d '')
+        THREAD_ID=$(echo "$THREAD_RESPONSE" | jq -r '.id')
+        echo "THREAD_ID=$THREAD_ID" >> $GITHUB_ENV
+      shell: bash
 
-        # Extract the generated guide content from the API response
-        GUIDE_CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+    - name: Add a message to the thread
+      run: |
+        MESSAGE_CONTENT="${{ env.TITLE }}: ${{ env.DESCRIPTION }}"
+        curl -s https://api.openai.com/v1/threads/${{ env.THREAD_ID }}/messages \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $OPENAI_API_KEY" \
+          -H "OpenAI-Beta: assistants=v2" \
+          -d "{\"role\": \"user\", \"content\": \"$MESSAGE_CONTENT\"}"
+      shell: bash
 
-        # Save the guide content to a markdown file
-        echo "$GUIDE_CONTENT" > guide.md
+    - name: Create a run
+      id: create_run
+      run: |
+        RUN_RESPONSE=$(curl -s https://api.openai.com/v1/threads/${{ env.THREAD_ID }}/runs \
+          -H "Authorization: Bearer $OPENAI_API_KEY" \
+          -H "Content-Type: application/json" \
+          -H "OpenAI-Beta: assistants=v2" \
+          -d "{
+            \"assistant_id\": \"${{ env.ASSISTANT_ID }}\",
+            \"instructions\": \"Please assist with the provided title and description.\"
+          }")
+        RUN_ID=$(echo "$RUN_RESPONSE" | jq -r '.id')
+        echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Wait for run completion
+      run: |
+        STATUS="running"
+        while [[ "$STATUS" == "running" || "$STATUS" == "queued" ]]; do
+          sleep 5
+          RUN_STATUS_RESPONSE=$(curl -s https://api.openai.com/v1/threads/${{ env.THREAD_ID }}/runs/${{ env.RUN_ID }} \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -H "OpenAI-Beta: assistants=v2")
+          STATUS=$(echo "$RUN_STATUS_RESPONSE" | jq -r '.status')
+          echo "Current run status: $STATUS"
+        done
+        if [[ "$STATUS" != "succeeded" ]]; then
+          echo "Run failed with status: $STATUS"
+          exit 1
+        fi
+      shell: bash
+
+    - name: Retrieve assistant's response
+      run: |
+        MESSAGES=$(curl -s https://api.openai.com/v1/threads/${{ env.THREAD_ID }}/messages \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $OPENAI_API_KEY" \
+          -H "OpenAI-Beta: assistants=v2")
+        ASSISTANT_MESSAGE=$(echo "$MESSAGES" | jq -r '.data[] | select(.role=="assistant") | .content')
+        echo "Assistant's Response:"
+        echo "$ASSISTANT_MESSAGE" > guide.md
+      shell: bash
 
     - name: Configure Git
       run: |
