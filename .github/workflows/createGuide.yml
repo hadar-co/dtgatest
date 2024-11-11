@@ -101,16 +101,15 @@ jobs:
 
     - name: Create and Push Branch with Guide
       run: |
-        git pull
-        git checkout -b generate-guide-branch
+        git checkout -b generate-guide
         git add guide.md
-        git commit -m "Add generated guide: ${{ github.event.inputs.title }}"
-        git push origin generate-guide-branch
+        git commit -m "Add generated guide: ${{ github.event.inputs.title }}" .
+        git push origin generate-guide
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
-        branch: generate-guide-branch
+        branch: generate-guide
         title: "Add Generated Guide: ${{ github.event.inputs.title }}"
         body: "This PR adds a new guide generated based on the provided title and description."
         base: main
