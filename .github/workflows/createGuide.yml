@@ -77,7 +77,7 @@ jobs:
           STATUS=$(echo "$RUN_STATUS_RESPONSE" | jq -r '.status')
           echo "Current run status: $STATUS"
         done
-        if [[ "$STATUS" != "succeeded" || "$STATUS" != "completed" ]]; then
+        if [[ "$STATUS" != "succeeded" && "$STATUS" != "completed" ]]; then
           echo "Run failed with status: $STATUS"
           exit 1
         fi
