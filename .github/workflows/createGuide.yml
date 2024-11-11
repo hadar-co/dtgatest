@@ -90,7 +90,7 @@ jobs:
           -H "Authorization: Bearer $OPENAI_API_KEY" \
           -H "OpenAI-Beta: assistants=v2")
         ASSISTANT_MESSAGE=$(echo "$MESSAGES" | jq -r '.data[] | select(.role=="assistant") | .content')
-        echo "Assistant's Response:"
+        echo "Assistant's Response:\n$ASSISTANT_MESSAGE"
         echo "$ASSISTANT_MESSAGE" > guide.md
       shell: bash
 
@@ -101,6 +101,7 @@ jobs:
 
     - name: Create and Push Branch with Guide
       run: |
+        git pull
         git checkout -b generate-guide-branch
         git add guide.md
         git commit -m "Add generated guide: ${{ github.event.inputs.title }}"
