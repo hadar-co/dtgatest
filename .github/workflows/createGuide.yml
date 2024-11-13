@@ -100,16 +100,21 @@ jobs:
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
     - name: Create and Push Branch with Guide
+      id: create_branch
       run: |
-        git checkout -b generate-guide
+        ls -al
+        export BRANCH_NAME="new-guide-branch-${{ github.run_id }}"
+        echo "NEW_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
+        git checkout -b "$BRANCH_NAME"
         git add guide.md
-        git commit -m "Add generated guide: ${{ github.event.inputs.title }}" .
-        git push origin generate-guide
+        git commit -m "Add generated guide: ${{ github.event.inputs.title }}"
+        git push origin "$BRANCH_NAME"
+      shell: bash
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
-        branch: generate-guide
+        branch: ${{ env.NEW_BRANCH }}
         title: "Add Generated Guide: ${{ github.event.inputs.title }}"
         body: "This PR adds a new guide generated based on the provided title and description."
         base: main
