@@ -91,7 +91,7 @@ jobs:
           -H "OpenAI-Beta: assistants=v2")
         ASSISTANT_MESSAGE=$(echo "$MESSAGES" | jq -r '.data[] | select(.role=="assistant") | .content')
         echo "Assistant's Response:\n$ASSISTANT_MESSAGE"
-        echo "$ASSISTANT_MESSAGE" > guide.md
+        echo "$ASSISTANT_MESSAGE" | jq --slurp '.[0].[].text.value' > guide.md
       shell: bash
 
     # - name: Configure Git
