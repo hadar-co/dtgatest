@@ -52,35 +52,53 @@ jobs:
             exit 1
           fi
           
-          # Extract key metrics and format the message
-          stats=$(jq -r '.aggregate_statistics' kapa_response.json)
-          
-          # Create a formatted message
-          message="📊 *Weekly Kapa.ai Usage Report*\n"
-          message+="Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')\n\n"
-          
-          message+="*Key Metrics:*\n"
-          message+="• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n"
-          message+="• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n"
-          message+="• Support Tickets Deflected: $(jq -r '.aggregate_statistics.total_support_tickets_deflected' kapa_response.json)\n\n"
-          
-          message+="*Quality Metrics:*\n"
-          message+="• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n"
-          message+="• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)\n"
-          message+="• Uncertain Responses: $(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)\n"
-          
-          # Calculate success rate
+          # Create JSON payload for Slack
+          cat << EOF > slack_payload.json
+          {
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "📊 Weekly Kapa.ai Usage Report",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Key Metrics:*\n• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n• Support Tickets Deflected: $(jq -r '.aggregate_statistics.total_support_tickets_deflected' kapa_response.json)"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Quality Metrics:*\n• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)\n• Uncertain Responses: $(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)"
+                }
+              }
+            ]
+          }
+          EOF
+
+          # Add success rate if there are votes
           total_votes=$(jq -r '.aggregate_statistics.total_upvotes + .aggregate_statistics.total_downvotes' kapa_response.json)
           if [ "$total_votes" -gt 0 ]; then
             success_rate=$(echo "scale=1; $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json) * 100 / $total_votes" | bc)
-            message+="\n*Success Rate:* ${success_rate}%\n"
+            jq --arg rate "$success_rate" '.blocks += [{"type": "section", "text": {"type": "mrkdwn", "text": "*Success Rate:* \($rate)%"}}]' slack_payload.json > temp.json && mv temp.json slack_payload.json
           fi
 
           # Add integration breakdown
-          message+="\n*Questions by Integration:*\n"
-          
-          # Create a temporary file for integration stats to avoid pipeline issues
-          jq -r '
+          echo "Adding integration stats..."
+          integration_stats=$(jq -r '
             .time_series | 
             map(.count_by_integration[]) | 
             group_by(.integration_type) | 
@@ -93,21 +111,20 @@ jobs:
             reverse[] |
             select(.total > 0) |
             "• \(.description // .type): \(.total)"
-          ' kapa_response.json >> integration_stats.txt
-          
-          # Add integration stats to message
-          while IFS= read -r line; do
-            message+="$line\n"
-          done < integration_stats.txt
-          
-          echo "message<<EOF" >> $GITHUB_ENV
-          echo "$message" >> $GITHUB_ENV
+          ' kapa_response.json | paste -sd "\n" -)
+
+          if [ ! -z "$integration_stats" ]; then
+            jq --arg stats "$integration_stats" '.blocks += [{"type": "section", "text": {"type": "mrkdwn", "text": "*Questions by Integration:*\n\($stats)"}}]' slack_payload.json > temp.json && mv temp.json slack_payload.json
+          fi
+
+          # Store the payload for the Slack step
+          echo "slack_payload<<EOF" >> $GITHUB_ENV
+          cat slack_payload.json >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Send to Slack
-        uses: act10ns/slack@v2
+        uses: slackapi/slack-github-action@v1.24.0
         with:
-          status: ${{ job.status }}
-          message: ${{ env.message }}
+          payload: ${{ env.slack_payload }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
