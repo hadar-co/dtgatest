@@ -77,8 +77,8 @@ jobs:
             success_text=""
           fi
 
-          # Get integration breakdown
-          # First, get the community channel count if it exists
+          # Get counts for each integration
+          # Community channel count
           community_count=$(jq -r '
             .time_series | 
             map(.count_by_integration[]) | 
@@ -87,29 +87,29 @@ jobs:
             add // 0
           ' kapa_response.json)
 
-          # Then get other integrations
-          other_integrations=$(jq -r '
+          # Docs AI count
+          docs_ai_count=$(jq -r '
             .time_series | 
             map(.count_by_integration[]) | 
-            group_by(.integration_type) | 
-            map({
-              type: .[0].integration_type,
-              description: .[0].description,
-              total: map(.count) | add
-            }) |
-            map(select(.description != "Support Form Deflector (Demo)"))) |
-            map(select(.type != "SLACK_CHANNEL" or (.type == "SLACK_CHANNEL" and (.description | test("community"; "i") | not)))) |
-            sort_by(.total) |
-            reverse[] |
-            select(.total > 0) |
-            "• \(.description // .type): \(.total)"
-          ' kapa_response.json | paste -sd "\n" -)
+            map(select(.description == "Docs AI")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
 
-          # Combine the integrations, always including community channel
-          integration_text="\n\n*Questions by Integration:*\n• Slack community channel: $community_count"
-          if [ ! -z "$other_integrations" ]; then
-            integration_text+="\n${other_integrations}"
-          fi
+          # Ask-ai internal Slack count
+          internal_slack_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Ask-ai internal Slack")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Combine all integrations in the desired order
+          integration_text="\n\n*Questions by Integration:*"
+          integration_text+="\n• Docs AI: $docs_ai_count"
+          integration_text+="\n• Slack community channel: $community_count"
+          integration_text+="\n• Ask-ai internal Slack: $internal_slack_count"
 
           # Send to Slack using curl
           curl -X POST -H 'Content-type: application/json' \
