@@ -19,25 +19,23 @@ jobs:
       - name: Fetch Kapa Analytics
         id: fetch-analytics
         run: |
-          # Make the API call and store response
-          response=$(curl -v -s -X GET \
+          # Make the API call and store response directly to file
+          curl -v -s -X GET \
             "https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/analytics/activity/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}&aggregation_period=DAY" \
-            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}")
+            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
+            -o kapa_response.json
           
-          # Debug: Print the response (masked for security)
+          # Debug: Print the first part of the response
           echo "API Response (first 500 chars):"
-          echo "${response:0:500}"
+          head -c 500 kapa_response.json
           
           # Validate JSON response
-          if ! echo "$response" | jq empty; then
+          if ! jq empty kapa_response.json; then
             echo "Error: Invalid JSON response from API"
             echo "Full response:"
-            echo "$response"
+            cat kapa_response.json
             exit 1
           fi
-          
-          # Save response to a file for processing
-          echo "$response" > kapa_response.json
           
           # Verify the response has the expected structure
           if ! jq -e '.aggregate_statistics' kapa_response.json > /dev/null; then
@@ -62,27 +60,27 @@ jobs:
           message+="Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')\n\n"
           
           message+="*Key Metrics:*\n"
-          message+="• Total Questions: $(echo $stats | jq -r '.total_questions')\n"
-          message+="• Unique Users: $(echo $stats | jq -r '.total_unique_users')\n"
-          message+="• Support Tickets Deflected: $(echo $stats | jq -r '.total_support_tickets_deflected')\n\n"
+          message+="• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n"
+          message+="• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n"
+          message+="• Support Tickets Deflected: $(jq -r '.aggregate_statistics.total_support_tickets_deflected' kapa_response.json)\n\n"
           
           message+="*Quality Metrics:*\n"
-          message+="• Upvotes: $(echo $stats | jq -r '.total_upvotes')\n"
-          message+="• Downvotes: $(echo $stats | jq -r '.total_downvotes')\n"
-          message+="• Uncertain Responses: $(echo $stats | jq -r '.total_questions_uncertain')\n"
+          message+="• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n"
+          message+="• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)\n"
+          message+="• Uncertain Responses: $(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)\n"
           
           # Calculate success rate
-          total_votes=$(echo "$stats" | jq -r '.total_upvotes + .total_downvotes')
+          total_votes=$(jq -r '.aggregate_statistics.total_upvotes + .aggregate_statistics.total_downvotes' kapa_response.json)
           if [ "$total_votes" -gt 0 ]; then
-            success_rate=$(echo "scale=1; $(echo $stats | jq -r '.total_upvotes') * 100 / $total_votes" | bc)
+            success_rate=$(echo "scale=1; $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json) * 100 / $total_votes" | bc)
             message+="\n*Success Rate:* ${success_rate}%\n"
           fi
 
           # Add integration breakdown
           message+="\n*Questions by Integration:*\n"
           
-          # Process time_series data to get total counts per integration
-          integration_counts=$(jq -r '
+          # Create a temporary file for integration stats to avoid pipeline issues
+          jq -r '
             .time_series | 
             map(.count_by_integration[]) | 
             group_by(.integration_type) | 
@@ -92,17 +90,15 @@ jobs:
               total: map(.count) | add
             }) |
             sort_by(.total) |
-            reverse[]' kapa_response.json)
-
-          # Add each integration's stats to the message
-          echo "$integration_counts" | while IFS= read -r integration; do
-            type=$(echo "$integration" | jq -r '.type')
-            desc=$(echo "$integration" | jq -r '.description')
-            count=$(echo "$integration" | jq -r '.total')
-            if [ "$count" -gt 0 ]; then
-              message+="• ${desc:-$type}: $count\n"
-            fi
-          done
+            reverse[] |
+            select(.total > 0) |
+            "• \(.description // .type): \(.total)"
+          ' kapa_response.json >> integration_stats.txt
+          
+          # Add integration stats to message
+          while IFS= read -r line; do
+            message+="$line\n"
+          done < integration_stats.txt
           
           echo "message<<EOF" >> $GITHUB_ENV
           echo "$message" >> $GITHUB_ENV
