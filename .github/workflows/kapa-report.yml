@@ -55,9 +55,18 @@ jobs:
           # Create formatted message sections
           period_text="Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')"
           
-          key_metrics="*Key Metrics:*\n• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n• Support Tickets Deflected: $(jq -r '.aggregate_statistics.total_support_tickets_deflected' kapa_response.json)"
+          # Calculate uncertain percentage
+          total_questions=$(jq -r '.aggregate_statistics.total_questions' kapa_response.json)
+          uncertain_questions=$(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)
+          if [ "$total_questions" -gt 0 ]; then
+            uncertain_percentage=$(echo "scale=1; $uncertain_questions * 100 / $total_questions" | bc)
+          else
+            uncertain_percentage=0
+          fi
           
-          quality_metrics="*Quality Metrics:*\n• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)\n• Uncertain Responses: $(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)"
+          key_metrics="*Key Metrics:*\n• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n• Uncertain Responses: $uncertain_questions ($uncertain_percentage%)"
+          
+          quality_metrics="*Quality Metrics:*\n• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)"
           
           # Calculate success rate
           total_votes=$(jq -r '.aggregate_statistics.total_upvotes + .aggregate_statistics.total_downvotes' kapa_response.json)
@@ -81,7 +90,14 @@ jobs:
             sort_by(.total) |
             reverse[] |
             select(.total > 0) |
-            "• \(.description // .type): \(.total)"
+            select(.description != "Support Form Deflector (Demo)") |
+            # Map specific integration types to desired names
+            . as $integration |
+            if .type == "SLACK_CHANNEL" and (.description | test("community"; "i")) then
+              "• Slack community channel: \(.total)"
+            else
+              "• \(.description // .type): \(.total)"
+            end
           ' kapa_response.json | paste -sd "\n" -)
 
           if [ ! -z "$integration_stats" ]; then
