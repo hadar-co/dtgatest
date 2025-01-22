@@ -21,7 +21,7 @@ jobs:
         run: |
           # Make the API call and store response directly to file
           curl -v -s -X GET \
-            "https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/analytics/activity/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}&aggregation_period=DAY" \
+            "https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/analytics/activity/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}&aggregation_period=WEEK" \
             -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
             -o kapa_response.json
           
@@ -78,7 +78,17 @@ jobs:
           fi
 
           # Get integration breakdown
-          integration_stats=$(jq -r '
+          # First, get the community channel count if it exists
+          community_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.type == "SLACK_CHANNEL" and (.description | test("community"; "i")))) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Then get other integrations
+          other_integrations=$(jq -r '
             .time_series | 
             map(.count_by_integration[]) | 
             group_by(.integration_type) | 
@@ -87,23 +97,18 @@ jobs:
               description: .[0].description,
               total: map(.count) | add
             }) |
+            map(select(.description != "Support Form Deflector (Demo)"))) |
+            map(select(.type != "SLACK_CHANNEL" or (.type == "SLACK_CHANNEL" and (.description | test("community"; "i") | not)))) |
             sort_by(.total) |
             reverse[] |
             select(.total > 0) |
-            select(.description != "Support Form Deflector (Demo)") |
-            # Map specific integration types to desired names
-            . as $integration |
-            if .type == "SLACK_CHANNEL" and (.description | test("community"; "i")) then
-              "• Slack community channel: \(.total)"
-            else
-              "• \(.description // .type): \(.total)"
-            end
+            "• \(.description // .type): \(.total)"
           ' kapa_response.json | paste -sd "\n" -)
 
-          if [ ! -z "$integration_stats" ]; then
-            integration_text="\n\n*Questions by Integration:*\n${integration_stats}"
-          else
-            integration_text=""
+          # Combine the integrations, always including community channel
+          integration_text="\n\n*Questions by Integration:*\n• Slack community channel: $community_count"
+          if [ ! -z "$other_integrations" ]; then
+            integration_text+="\n${other_integrations}"
           fi
 
           # Send to Slack using curl
