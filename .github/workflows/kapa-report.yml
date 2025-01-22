@@ -55,6 +55,7 @@ jobs:
           # Create JSON payload for Slack
           cat << EOF > slack_payload.json
           {
+            "text": "Weekly Kapa.ai Usage Report",
             "blocks": [
               {
                 "type": "header",
