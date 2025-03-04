@@ -56,4 +56,4 @@ def fetch_videos():
     return videos
 
 if __name__ == "__main__":
-    print(json.dumps(fetch_videos())
+    print(json.dumps(fetch_videos()))
