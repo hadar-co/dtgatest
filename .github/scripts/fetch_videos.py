@@ -1,7 +1,7 @@
 import json
 import requests
 import isodate
-PLAYLIST_ID = [YOUR_PLAYLIST_ID]
+PLAYLIST_ID = "PLOipq2_FbKCM9hv-6AGcxx32i5vrydWFv"
 PLAYLIST_ITEMS_URL = f"https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&key=[YOUR_API_KEY]&playlistId={PLAYLIST_ID}&maxResults=30"
 VIDEO_URL = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=contentDetails&part=snippet&key=[YOUR_API_KEY]&id={video_id}"
 
