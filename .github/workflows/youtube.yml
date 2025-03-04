@@ -1,0 +1,51 @@
+name: Ingest YouTube Data Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-custom-action:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Verify Python Installation
+        run: python --version
+
+      - name: Install dependencies
+        run: pip install requests isodate
+
+      - name: Run fetch_videos.py
+        run: | 
+          python ../scripts/fetch_videos.py > entities.json
+          entities_string=$(cat entities.json | jq -c .)
+          echo entities=$entities_string >> $GITHUB_ENV
+
+      - uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: BULK_UPSERT
+          entities: ${{ env.entities }}
+
+      - name: Run fetch_playlist.py
+        run: |
+          python ../scripts/fetch_playlist.py > entities.json
+          entities_string=$(cat entities.json | jq -c .)
+          echo "entities=$entities_string" >> $GITHUB_ENV
+
+      - uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: BULK_UPSERT
+          entities: ${{ env.entities }}
