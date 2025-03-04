@@ -1,9 +1,9 @@
 import json
 import requests
 PLAYLIST_ID = "PLOipq2_FbKCM9hv-6AGcxx32i5vrydWFv"
-PLAYLIST_ITEMS_URL = f"https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&key=[YOUR_API_KEY]&playlistId={PLAYLIST_ID}&maxResults=30"
+PLAYLIST_ITEMS_URL = f"https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&key=AIzaSyCk3lJt4TD8RoGd6gz1pVh-XmGvfVant7o&playlistId={PLAYLIST_ID}&maxResults=30"
 PLAYLIST_NAME_URL = f"https://www.googleapis.com/youtube/v3/playlists?part=snippet&part=ContentDetails&id={PLAYLIST_ID}&key=[YOUR_API_KEY]"
-VIDEO_URL = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=contentDetails&key=[YOUR_API_KEY]&id={video_id}"
+VIDEO_URL = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=contentDetails&key=AIzaSyCk3lJt4TD8RoGd6gz1pVh-XmGvfVant7o&id={video_id}"
 
 def enrich_with_blueprint_properties(playlist, playlist_name, properties, videos_in_playlist):
     playlist["identifier"] = PLAYLIST_ID
